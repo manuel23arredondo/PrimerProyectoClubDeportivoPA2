@@ -1,5 +1,4 @@
-﻿
-namespace PrimerProyectoClubDeportivoPA2.Web.Data
+﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
