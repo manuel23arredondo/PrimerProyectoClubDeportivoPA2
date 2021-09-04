@@ -5,11 +5,9 @@
     using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
 
     public class DataContext : IdentityDbContext<User>
-
     {
-
+        public DbSet<Guest> Guests { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
-
         {
 
         }
