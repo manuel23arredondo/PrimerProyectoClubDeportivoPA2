@@ -8,6 +8,7 @@
     {
         public DbSet<Guest> Guests { get; set; }
         public DbSet<Coach> Coaches { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -15,6 +16,4 @@
         }
 
     }
-
-
 }
