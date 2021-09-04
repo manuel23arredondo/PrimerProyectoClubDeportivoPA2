@@ -7,6 +7,8 @@
     public class DataContext : IdentityDbContext<User>
     {
         public DbSet<Guest> Guests { get; set; }
+        public DbSet<Coach> Coaches { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 

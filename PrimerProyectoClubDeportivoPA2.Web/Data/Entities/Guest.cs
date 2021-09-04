@@ -26,7 +26,7 @@
 
         [MaxLength(25, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
 
-        [Display(Name = "Apellido")]
+        [Display(Name = "Apellidos")]
 
         public string LastName { get; set; }
     }
