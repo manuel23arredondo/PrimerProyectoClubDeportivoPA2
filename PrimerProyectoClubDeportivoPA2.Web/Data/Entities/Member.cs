@@ -3,7 +3,7 @@
 namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
     using System.ComponentModel.DataAnnotations;
-    public class Member
+    public class Member:IEntity
     {
         [Display(Name = "No. de Miembro")]
         public int Id { get; set; }

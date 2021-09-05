@@ -1,7 +1,7 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
     using System.ComponentModel.DataAnnotations;
-    public class Employee
+    public class Employee:IEntity
     {
         [Display(Name = "No. de Empleado")]
         public int Id { get; set; }
