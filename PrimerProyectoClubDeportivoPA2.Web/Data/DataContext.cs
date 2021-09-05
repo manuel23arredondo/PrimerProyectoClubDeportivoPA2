@@ -11,7 +11,8 @@
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Sport> Sports { get; set; }
-
+        public DbSet<Facility> Facilities { get; set; }
+        
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 

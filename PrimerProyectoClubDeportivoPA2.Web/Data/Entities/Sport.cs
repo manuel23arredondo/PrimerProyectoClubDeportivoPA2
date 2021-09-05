@@ -34,7 +34,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 
         [MaxLength(30, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
 
-        [Display(Name = "Horario de trabajo")]
+        [Display(Name = "Horario de clase")]
 
         public string Schedule { get; set; }
 
