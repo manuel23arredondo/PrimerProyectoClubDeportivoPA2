@@ -1,6 +1,5 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     public class PermissionAccess : IEntity
     {
@@ -12,5 +11,6 @@
         public string Name { get; set; }
 
         public Sport Sport { get; set; }
+        public MembershipType MembershipType { get; set; }
     }
 }
