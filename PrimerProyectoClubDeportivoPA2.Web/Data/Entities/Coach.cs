@@ -1,5 +1,6 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     public class Coach : IEntity
     {
@@ -87,6 +88,7 @@
 
         public string UrlOfficialID { get; set; }
 
+        public ICollection<TrainingSession> TrainingSessions { get; set; }
         public Facility Facility { get; set; }
         public Sport Sport { get; set; }
     }
