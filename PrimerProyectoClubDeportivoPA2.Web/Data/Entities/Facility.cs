@@ -1,5 +1,6 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     public class Facility : IEntity
     {
@@ -40,5 +41,7 @@
         [Display(Name = "Url de fotografía")]
 
         public string UrlPicture { get; set; }
+
+        public ICollection<Sport> Sports { get; set; }
     }
 }
