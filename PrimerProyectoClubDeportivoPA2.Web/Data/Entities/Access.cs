@@ -10,6 +10,6 @@
         [Display(Name = "Acceso")]
         public string Name { get; set; }
 
-        
+        public Facility Facilty { get; set; }
     }
 }
