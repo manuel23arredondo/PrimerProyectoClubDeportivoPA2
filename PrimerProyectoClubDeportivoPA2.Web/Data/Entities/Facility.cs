@@ -43,5 +43,6 @@
         public string UrlPicture { get; set; }
 
         public ICollection<Sport> Sports { get; set; }
+        public ICollection<Access> Accesses { get; set; }
     }
 }
