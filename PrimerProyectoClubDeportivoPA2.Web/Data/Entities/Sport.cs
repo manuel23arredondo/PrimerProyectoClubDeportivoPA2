@@ -53,5 +53,6 @@
         public int Capacity { get; set; }
 
         public ICollection<Coach> Coaches { get; set; }
+        public ICollection<PermissionAccess> PermissionAccesses { get; set; }
     }
 }
