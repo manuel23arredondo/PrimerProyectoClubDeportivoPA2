@@ -1,5 +1,6 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     public class MembershipType : IEntity
     {
@@ -32,5 +33,8 @@
         [Display(Name = "Costo")]
 
         public double Cost { get; set; }
+
+        public ICollection<Member> Members { get; set; }
+        public ICollection<PermissionAccess> PermissionAccesses { get; set; }
     }
 }
