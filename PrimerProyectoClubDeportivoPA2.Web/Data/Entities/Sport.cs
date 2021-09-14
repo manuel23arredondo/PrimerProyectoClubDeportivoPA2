@@ -54,5 +54,6 @@
 
         public ICollection<Coach> Coaches { get; set; }
         public ICollection<PermissionAccess> PermissionAccesses { get; set; }
+        public Facility Facility { get; set; }
     }
 }
