@@ -86,5 +86,8 @@
         [Display(Name = "Url de Identificación Oficial")]
 
         public string UrlOfficialID { get; set; }
+
+        public Facility Facility { get; set; }
+        public Sport Sport { get; set; }
     }
 }
