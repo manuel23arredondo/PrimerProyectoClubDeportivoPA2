@@ -1,5 +1,6 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     public class Employee:IEntity
     {
@@ -68,5 +69,7 @@
         [Display(Name = "Url de Identificación Oficial")]
 
         public string UrlOfficialID { get; set; }
+
+        public ICollection<Access> Accesses { get; set; }
     }
 }
