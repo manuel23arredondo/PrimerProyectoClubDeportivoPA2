@@ -11,5 +11,6 @@
         public string Name { get; set; }
 
         public Coach Coach { get; set; }
+        public Member Member { get; set; }
     }
 }
