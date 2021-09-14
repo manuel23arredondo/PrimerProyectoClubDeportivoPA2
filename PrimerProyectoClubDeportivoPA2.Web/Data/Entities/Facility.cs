@@ -44,5 +44,6 @@
 
         public ICollection<Sport> Sports { get; set; }
         public ICollection<Access> Accesses { get; set; }
+        public ICollection<Coach> Coaches { get; set; }
     }
 }
