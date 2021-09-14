@@ -2,6 +2,7 @@
 
 namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     public class Member:IEntity
     {
@@ -79,5 +80,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
         [Display(Name = "Url de Identificación Oficial")]
 
         public string UrlOfficialID { get; set; }
+
+        public ICollection<TrainingSession> TrainingSessions { get; set; }
     }
 }
