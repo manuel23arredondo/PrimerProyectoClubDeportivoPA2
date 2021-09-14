@@ -82,5 +82,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
         public string UrlOfficialID { get; set; }
 
         public ICollection<TrainingSession> TrainingSessions { get; set; }
+        public MembershipType MembershipType { get; set; }
     }
 }
