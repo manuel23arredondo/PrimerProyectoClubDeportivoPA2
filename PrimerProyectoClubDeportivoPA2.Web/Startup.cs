@@ -44,6 +44,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddTransient<Seeder>();
             services.AddControllersWithViews();
         }
 
