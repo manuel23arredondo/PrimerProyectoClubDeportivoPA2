@@ -7,7 +7,8 @@
     public class DataContext : IdentityDbContext<User>
     {
         public DbSet<AdditionalSkill> AdditionalSkills { get; set; }
-        public DbSet<Admin> Admins { get; set; }
+        public DbSet<Admin> Admins { get; set; }      
+        public DbSet<Agenda> Agendas { get; set; }        
         public DbSet<Coach> Coaches { get; set; }
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<Member> Members { get; set; }

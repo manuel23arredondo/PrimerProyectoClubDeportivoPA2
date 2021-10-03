@@ -1,5 +1,6 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     public class TrainingSession : IEntity
     {
@@ -19,5 +20,6 @@
         public Schedule Schedule { get; set; }
         public Coach Coach { get; set; }
         public Sport Sport { get; set; }
-    }
+        public ICollection<Agenda> Agendas { get; set; }
+    } 
 }

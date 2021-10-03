@@ -194,6 +194,28 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     b.ToTable("Admins");
                 });
 
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Agenda", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TrainingSessionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("TrainingSessionId");
+
+                    b.ToTable("Agendas");
+                });
+
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Coach", b =>
                 {
                     b.Property<int>("Id")
@@ -257,9 +279,14 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     b.Property<int?>("MembershipTypeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("userId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MembershipTypeId");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("Members");
                 });
@@ -271,8 +298,9 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Cost")
-                        .HasColumnType("float")
+                    b.Property<string>("Cost")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(7)")
                         .HasMaxLength(7);
 
                     b.Property<string>("Description")
@@ -570,6 +598,17 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Agenda", b =>
+                {
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Member", "Member")
+                        .WithMany("Agendas")
+                        .HasForeignKey("MemberId");
+
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.TrainingSession", "TrainingSession")
+                        .WithMany("Agendas")
+                        .HasForeignKey("TrainingSessionId");
+                });
+
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Coach", b =>
                 {
                     b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.User", "User")
@@ -579,9 +618,13 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Member", b =>
                 {
-                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.MembershipType", null)
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.MembershipType", "MembershipType")
                         .WithMany("Members")
                         .HasForeignKey("MembershipTypeId");
+
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Permit", b =>

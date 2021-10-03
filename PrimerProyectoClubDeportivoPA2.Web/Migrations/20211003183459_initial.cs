@@ -73,7 +73,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 25, nullable: false),
                     Description = table.Column<string>(maxLength: 100, nullable: false),
-                    Cost = table.Column<double>(maxLength: 7, nullable: false)
+                    Cost = table.Column<string>(maxLength: 7, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -258,6 +258,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    userId = table.Column<string>(nullable: true),
                     MembershipTypeId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -267,6 +268,12 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         name: "FK_Members_MembershipTypes_MembershipTypeId",
                         column: x => x.MembershipTypeId,
                         principalTable: "MembershipTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Members_AspNetUsers_userId",
+                        column: x => x.userId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -388,6 +395,32 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Agendas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrainingSessionId = table.Column<int>(nullable: true),
+                    MemberId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agendas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Agendas_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Agendas_TrainingSessions_TrainingSessionId",
+                        column: x => x.TrainingSessionId,
+                        principalTable: "TrainingSessions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AdditionalSkills_CoachId",
                 table: "AdditionalSkills",
@@ -402,6 +435,16 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 name: "IX_Admins_UserId",
                 table: "Admins",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Agendas_MemberId",
+                table: "Agendas",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Agendas_TrainingSessionId",
+                table: "Agendas",
+                column: "TrainingSessionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -453,6 +496,11 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 column: "MembershipTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Members_userId",
+                table: "Members",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Permits_MembershipTypeId",
                 table: "Permits",
                 column: "MembershipTypeId");
@@ -497,6 +545,9 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 name: "Admins");
 
             migrationBuilder.DropTable(
+                name: "Agendas");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -512,10 +563,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Members");
+                name: "Permits");
 
             migrationBuilder.DropTable(
-                name: "Permits");
+                name: "Members");
 
             migrationBuilder.DropTable(
                 name: "TrainingSessions");

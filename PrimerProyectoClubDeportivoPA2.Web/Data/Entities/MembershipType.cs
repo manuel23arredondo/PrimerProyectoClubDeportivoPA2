@@ -20,7 +20,7 @@
         [Required(ErrorMessage = "{0} es obligatorio")]
         [MaxLength(7, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]
         [Display(Name = "Costo")]
-        public double Cost { get; set; }
+        public string Cost { get; set; }
 
         public ICollection<Permit> Permits { get; set; }
         public ICollection<Member> Members { get; set; }
