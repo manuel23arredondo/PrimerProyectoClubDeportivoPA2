@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
+﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

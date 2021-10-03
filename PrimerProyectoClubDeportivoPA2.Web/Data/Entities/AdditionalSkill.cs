@@ -12,6 +12,6 @@
         public string Name { get; set; }
 
         public Coach Coach { get; set; }
-        public Sport sport { get; set; }
+        public Sport Sport { get; set; }
     }
 }

@@ -23,16 +23,41 @@
             await userHelper.CheckRoleAsync("Coach");
             await userHelper.CheckRoleAsync("Member");
 
+            if (!this.dataContext.Admins.Any())
+            {
+                var user = await CheckUser("Bill", "Gates", "272 560 8922", DateTime.Now, 1000000, "bill.microsoft@gmail.com", "123456");
+                await CheckAdmin(user, "Admin");
+            }
+
             if (!this.dataContext.Coaches.Any())
             {
                 var user = await CheckUser("Armando", "Lopez", "272 115 0000", DateTime.Now, 2001515, "armando.l@gmail.com", "123456");
-                await CheckCoach(user, "Coach", "$5000.0");
+                await CheckCoach(user, "Coach", "$5000", "Boxeador profesional");
+                user = await CheckUser("Antonio", "Ruiz", "272 155 1000", DateTime.Now, 2001555, "tony.rl@gmail.com", "123456");
+                await CheckCoach(user, "Coach", "$8500", "Clavadista profesional");
+                user = await CheckUser("Pedro", "Cortés", "272 895 0560", DateTime.Now, 2005555, "cortes.peter@gmail.com", "123456");
+                await CheckCoach(user, "Coach", "$4200", "Tenista");
             }
 
             if (!this.dataContext.Members.Any())
             {
                 var user = await CheckUser("Luis", "Perez", "272 862 4156", DateTime.Now, 1005858, "perez.luis@gmail.com", "123456");
-                await CheckMember(user, "Member");
+                var membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Id == 3);
+                await CheckMember(user, "Member", membershipType);
+                
+                user = await CheckUser("Samantha", "Lopez", "272 555 4666", DateTime.Now, 1001180, "samy@gmail.com", "123456");
+                await CheckMember(user, "Member", membershipType);
+
+                user = await CheckUser("Porfirio", "Ruiz", "272 887 7531", DateTime.Now, 1001059, "porfirito@gmail.com", "123456");
+                await CheckMember(user, "Member", membershipType);
+
+                membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Name == "Oro");
+                user = await CheckUser("Rodrigo", "Armendariz", "272 100 8566", DateTime.Now, 1008555, "armendariz.rod@gmail.com", "123456");
+                await CheckMember(user, "Member", membershipType);
+
+                membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Name == "Plata");
+                user = await CheckUser("Renato", "Ibarra", "272 851 7444", DateTime.Now, 1005744, "ibarra.rena@gmail.com", "123456");
+                await CheckMember(user, "Member", membershipType);
             }
 
             if (!this.dataContext.WeekDays.Any())
@@ -45,7 +70,7 @@
                 await CheckWeekday("Sábado");
                 await CheckWeekday("Domingo");
             }
-
+            
             if (!this.dataContext.Sports.Any())
             {
                 await CheckSport("Fútbol");
@@ -84,6 +109,82 @@
                 await CheckMembershipType("Oro", "Incluye todos los deportes de la membresía Plata además de Karate, Ping Pong y Atletismo", "$2500");
                 await CheckMembershipType("Platino", "Incluye todos los deportes de la membresía Oro además de Box, Natación, Clavados, Tennis y Golf", "$3500");
             }
+
+            if (!this.dataContext.Schedules.Any())
+            {
+                var weekDay = dataContext.WeekDays.FirstOrDefault(c => c.Name == "Lunes");
+                var facility = dataContext.Facilities.FirstOrDefault(c => c.Name == "Gimnasio");
+                await CheckSchedule(DateTime.Now, DateTime.Now, weekDay, facility);
+
+                weekDay = dataContext.WeekDays.FirstOrDefault(c => c.Name == "Jueves");
+                await CheckSchedule(DateTime.Now, DateTime.Now, weekDay, facility);
+
+                facility = dataContext.Facilities.FirstOrDefault(c => c.Name == "Alberca de clavados");
+                await CheckSchedule(DateTime.Now, DateTime.Now, weekDay, facility);
+
+                weekDay = dataContext.WeekDays.FirstOrDefault(c => c.Name == "Domingo");
+                facility = dataContext.Facilities.FirstOrDefault(c => c.Name == "Explanada");
+                await CheckSchedule(DateTime.Now, DateTime.Now, weekDay, facility);
+            }
+
+            if (!this.dataContext.TrainingSessions.Any())
+            {
+                var coach = dataContext.Coaches.FirstOrDefault(c => c.Id == 1);
+                var sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Box");
+                var schedule = dataContext.Schedules.FirstOrDefault(c => c.Id == 1);
+                await CheckTrainingSession("Boxeo avanzado", coach, sport, schedule, 10);
+
+                await CheckTrainingSession("Boxeo principiante", coach, sport, schedule, 10);
+
+                coach = dataContext.Coaches.FirstOrDefault(c => c.Id == 2);
+                sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Clavados");
+                schedule = dataContext.Schedules.FirstOrDefault(c => c.Id == 3);
+                await CheckTrainingSession("Clavados intermedio", coach, sport, schedule, 20);
+            }
+
+            if (!this.dataContext.Permits.Any())
+            {
+                var sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Golf");
+                var membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Name == "Platino");
+                await CheckPermit("Permiso platino", sport, membershipType);
+
+                sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Clavados");
+                await CheckPermit("Permiso platino", sport, membershipType);
+
+                sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Zumba");
+                membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Name == "Plata");
+                await CheckPermit("Permiso plata", sport, membershipType);
+
+                sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Ping Pong");
+                membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Name == "Oro");
+                await CheckPermit("Permiso oro", sport, membershipType);
+            }
+
+            if (!this.dataContext.AdditionalSkills.Any())
+            {
+                var coach = dataContext.Coaches.FirstOrDefault(c => c.Id == 1);
+                var sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Box");
+                await CheckAdditionalSkill("Judo cinta negra", coach, sport);
+
+                coach = dataContext.Coaches.FirstOrDefault(c => c.Id == 2);
+                sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Clavados");
+                await CheckAdditionalSkill("Ex-jugador waterpolo", coach, sport);
+            }
+
+            if (!this.dataContext.Agendas.Any())
+            {
+                var member = dataContext.Members.FirstOrDefault(c => c.Id == 1);
+                var trainingSession = dataContext.TrainingSessions.FirstOrDefault(c => c.Name == "Boxeo avanzado");
+                await CheckAgenda(member, trainingSession);
+
+                member = dataContext.Members.FirstOrDefault(c => c.Id == 2);
+                trainingSession = dataContext.TrainingSessions.FirstOrDefault(c => c.Name == "Boxeo principiante");
+                await CheckAgenda(member, trainingSession);
+
+                member = dataContext.Members.FirstOrDefault(c => c.Id == 3);
+                trainingSession = dataContext.TrainingSessions.FirstOrDefault(c => c.Name == "Clavados intermedio");
+                await CheckAgenda(member, trainingSession);
+            }
         }
 
         private async Task<User> CheckUser(string firstName, string lastName, string phoneNumber, DateTime birthdate, int enrollmentNumber, string email, string password)
@@ -110,16 +211,32 @@
             return user;
         }
 
-        private async Task CheckCoach(User user, string rol, string salary)
+        private async Task CheckAdmin(User user, string rol)
         {
-            this.dataContext.Coaches.Add(new Coach { User = user, Salary = salary });
+            this.dataContext.Admins.Add(new Admin { User = user });
             await this.dataContext.SaveChangesAsync();
             await userHelper.AddUserToRoleAsync(user, rol);
         }
 
-        private async Task CheckMember(User user, string rol)
+        private async Task CheckCoach(User user, string rol, string salary, string expertise)
         {
-            this.dataContext.Members.Add(new Member { User = user });
+            this.dataContext.Coaches.Add(new Coach 
+            {
+                User = user,
+                Salary = salary,
+                Expertise = expertise
+            });
+            await this.dataContext.SaveChangesAsync();
+            await userHelper.AddUserToRoleAsync(user, rol);
+        }
+
+        private async Task CheckMember(User user, string rol, MembershipType membershipType)
+        {
+            this.dataContext.Members.Add(new Member 
+            { 
+                User = user,
+                MembershipType = membershipType
+            });
             await this.dataContext.SaveChangesAsync();
             await userHelper.AddUserToRoleAsync(user, rol);
         }
@@ -199,6 +316,16 @@
             {
                 Member = member,
                 TrainingSession = trainingSession
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
+        private async Task CheckAdditionalSkill(string name, Coach coach, Sport sport)
+        {
+            this.dataContext.AdditionalSkills.Add(new AdditionalSkill
+            {
+                Name = name,
+                Coach = coach,
+                Sport = sport
             });
             await this.dataContext.SaveChangesAsync();
         }
