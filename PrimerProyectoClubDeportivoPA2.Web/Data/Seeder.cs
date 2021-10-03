@@ -1,22 +1,40 @@
-﻿using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PrimerProyectoClubDeportivoPA2.Web.Data
+﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data
 {
+    using Microsoft.AspNetCore.Identity;
+    using PrimerProyectoClubDeportivoPA2.Web.Helpers;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Web.Data.Entities;
     public class Seeder
     {
         private readonly DataContext dataContext;
-        //private readonly IUserHelper userHelper;
+        private readonly IUserHelper userHelper;
 
-        public Seeder(DataContext dataContext)
+        public Seeder(DataContext dataContext, IUserHelper userHelper)
         {
             this.dataContext = dataContext;
+            this.userHelper = userHelper;
         }
         public async Task SeedAsync()
         {
             await dataContext.Database.EnsureCreatedAsync();
+            await userHelper.CheckRoleAsync("Admin");
+            await userHelper.CheckRoleAsync("Coach");
+            await userHelper.CheckRoleAsync("Member");
+
+            if (!this.dataContext.Coaches.Any())
+            {
+                var user = await CheckUser("Armando", "Lopez", "272 115 0000", DateTime.Now, 2001515, "armando.l@gmail.com", "123456");
+                await CheckCoach(user, "Coach", "$5000.0");
+            }
+
+            if (!this.dataContext.Members.Any())
+            {
+                var user = await CheckUser("Luis", "Perez", "272 862 4156", DateTime.Now, 1005858, "perez.luis@gmail.com", "123456");
+                await CheckMember(user, "Member");
+            }
+
             if (!this.dataContext.WeekDays.Any())
             {
                 await CheckWeekday("Lunes");
@@ -67,6 +85,45 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Data
                 await CheckMembershipType("Platino", "Incluye todos los deportes de la membresía Oro además de Box, Natación, Clavados, Tennis y Golf", "$3500");
             }
         }
+
+        private async Task<User> CheckUser(string firstName, string lastName, string phoneNumber, DateTime birthdate, int enrollmentNumber, string email, string password)
+        {
+            var user = await userHelper.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    PhoneNumber = phoneNumber,
+                    BirhtDate = birthdate,
+                    EnrollmentNumber = enrollmentNumber,
+                    Email = email,
+                    UserName = email
+                };
+                var result = await userHelper.AddUserAsync(user, password);
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Error no se pudo crear el usuario");
+                }
+            }
+            return user;
+        }
+
+        private async Task CheckCoach(User user, string rol, string salary)
+        {
+            this.dataContext.Coaches.Add(new Coach { User = user, Salary = salary });
+            await this.dataContext.SaveChangesAsync();
+            await userHelper.AddUserToRoleAsync(user, rol);
+        }
+
+        private async Task CheckMember(User user, string rol)
+        {
+            this.dataContext.Members.Add(new Member { User = user });
+            await this.dataContext.SaveChangesAsync();
+            await userHelper.AddUserToRoleAsync(user, rol);
+        }
+
         private async Task CheckWeekday(string name)
         {
             this.dataContext.WeekDays.Add(new WeekDay { Name = name });

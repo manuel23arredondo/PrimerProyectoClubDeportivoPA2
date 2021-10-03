@@ -10,7 +10,7 @@
         [Required(ErrorMessage = "{0} es obligatorio")]
         [MaxLength(8, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]
         [Display(Name = "Salario")]
-        public double Salary { get; set; }
+        public string Salary { get; set; }
 
         [Required(ErrorMessage = "{0} es obligatorio")]
         [MaxLength(30, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]

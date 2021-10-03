@@ -9,7 +9,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
         [Display(Name = "Clave")]
         public int Id { get; set; }
 
-        public User user { get; set; }
+        public User User { get; set; }
         public MembershipType MembershipType { get; set; }
         public ICollection<Agenda> Agendas { get; set; }
     }

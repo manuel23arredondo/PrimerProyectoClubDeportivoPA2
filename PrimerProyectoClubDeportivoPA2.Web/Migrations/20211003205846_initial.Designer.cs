@@ -10,14 +10,14 @@ using PrimerProyectoClubDeportivoPA2.Web.Data;
 namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211003183459_initial")]
+    [Migration("20211003205846_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.18")
+                .HasAnnotation("ProductVersion", "3.1.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -230,8 +230,9 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.Property<double>("Salary")
-                        .HasColumnType("float")
+                    b.Property<string>("Salary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(8)")
                         .HasMaxLength(8);
 
                     b.Property<string>("UserId")
@@ -281,14 +282,14 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     b.Property<int?>("MembershipTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("userId")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MembershipTypeId");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Members");
                 });
@@ -438,7 +439,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("BirhtDay")
+                    b.Property<DateTime>("BirhtDate")
                         .HasColumnType("datetime2")
                         .HasMaxLength(15);
 
@@ -624,9 +625,9 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .WithMany("Members")
                         .HasForeignKey("MembershipTypeId");
 
-                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.User", "user")
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("userId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Permit", b =>

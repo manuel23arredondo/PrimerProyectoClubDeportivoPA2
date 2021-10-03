@@ -42,7 +42,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 15, nullable: true),
-                    BirhtDay = table.Column<DateTime>(maxLength: 15, nullable: false),
+                    BirhtDate = table.Column<DateTime>(maxLength: 15, nullable: false),
                     EnrollmentNumber = table.Column<int>(maxLength: 15, nullable: false)
                 },
                 constraints: table =>
@@ -237,7 +237,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Salary = table.Column<double>(maxLength: 8, nullable: false),
+                    Salary = table.Column<string>(maxLength: 8, nullable: false),
                     Expertise = table.Column<string>(maxLength: 30, nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
@@ -258,7 +258,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    userId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     MembershipTypeId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -271,8 +271,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Members_AspNetUsers_userId",
-                        column: x => x.userId,
+                        name: "FK_Members_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -496,9 +496,9 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 column: "MembershipTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Members_userId",
+                name: "IX_Members_UserId",
                 table: "Members",
-                column: "userId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Permits_MembershipTypeId",

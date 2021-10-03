@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PrimerProyectoClubDeportivoPA2.Web.Data;
 using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
+using PrimerProyectoClubDeportivoPA2.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web
             });
 
             services.AddTransient<Seeder>();
+            services.AddScoped<IUserHelper, UserHelper>();
             services.AddControllersWithViews();
         }
 
