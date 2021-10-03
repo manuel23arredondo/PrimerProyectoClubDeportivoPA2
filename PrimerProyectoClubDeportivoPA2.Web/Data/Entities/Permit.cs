@@ -1,13 +1,14 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Data.Entities
 {
     using System.ComponentModel.DataAnnotations;
-    public class PermissionAccess : IEntity
+    public class Permit : IEntity
     {
         [Display(Name = "Clave")]
         public int Id { get; set; }
-        [Required(ErrorMessage = "El campo Nombre es requerido")]
-        [MaxLength(20, ErrorMessage = "Debe introducir máximo {1} caracteres")]
-        [Display(Name = "Permiso para acceder")]
+
+        [Required(ErrorMessage = "{0} es obligatorio")]
+        [MaxLength(25, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]
+        [Display(Name = "Permiso")]
         public string Name { get; set; }
 
         public Sport Sport { get; set; }

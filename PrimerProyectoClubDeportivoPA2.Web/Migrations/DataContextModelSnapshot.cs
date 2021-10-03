@@ -150,6 +150,50 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.AdditionalSkill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CoachId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int?>("sportId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId");
+
+                    b.HasIndex("sportId");
+
+                    b.ToTable("AdditionalSkills");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Admin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Admins");
+                });
+
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Coach", b =>
                 {
                     b.Property<int>("Id")
@@ -157,97 +201,23 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Antiquity")
+                    b.Property<string>("Expertise")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
-
-                    b.Property<int>("EnrollmentNumber")
-                        .HasColumnType("int")
-                        .HasMaxLength(12);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
 
                     b.Property<double>("Salary")
                         .HasColumnType("float")
                         .HasMaxLength(8);
 
-                    b.Property<string>("Schedule")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("UrlCV")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(80)")
-                        .HasMaxLength(80);
-
-                    b.Property<string>("UrlOfficialID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(80)")
-                        .HasMaxLength(80);
-
-                    b.Property<string>("UrlPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(80)")
-                        .HasMaxLength(80);
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Coaches");
-                });
-
-            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("EnrollmentNumber")
-                        .HasColumnType("int")
-                        .HasMaxLength(12);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.Property<double>("Salary")
-                        .HasColumnType("float")
-                        .HasMaxLength(8);
-
-                    b.Property<string>("Schedule")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("UrlOfficialID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(80)")
-                        .HasMaxLength(80);
-
-                    b.Property<string>("UrlPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(80)")
-                        .HasMaxLength(80);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Facility", b =>
@@ -264,49 +234,17 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(40)")
-                        .HasMaxLength(40);
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
-
-                    b.Property<string>("UrlPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(80)")
-                        .HasMaxLength(80);
 
                     b.HasKey("Id");
 
                     b.ToTable("Facilities");
-                });
-
-            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Guest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(35)")
-                        .HasMaxLength(35);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Guests");
                 });
 
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Member", b =>
@@ -316,44 +254,12 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CellphoneNumber")
-                        .HasColumnType("int")
-                        .HasMaxLength(12);
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(35)")
-                        .HasMaxLength(35);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.Property<int>("MembershipNumber")
-                        .HasColumnType("int")
-                        .HasMaxLength(12);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.Property<string>("UrlOfficialID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(80)")
-                        .HasMaxLength(80);
-
-                    b.Property<string>("UrlPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(80)")
-                        .HasMaxLength(80);
+                    b.Property<int?>("MembershipTypeId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MembershipTypeId");
 
                     b.ToTable("Members");
                 });
@@ -384,7 +290,81 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     b.ToTable("MembershipTypes");
                 });
 
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Permit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("MembershipTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<int?>("SportId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MembershipTypeId");
+
+                    b.HasIndex("SportId");
+
+                    b.ToTable("Permits");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Schedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("FacilityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FinishingHour")
+                        .HasColumnType("datetime2")
+                        .HasMaxLength(25);
+
+                    b.Property<DateTime>("StartingHour")
+                        .HasColumnType("datetime2")
+                        .HasMaxLength(25);
+
+                    b.Property<int?>("WeekDayId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
+
+                    b.HasIndex("WeekDayId");
+
+                    b.ToTable("Schedules");
+                });
+
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Sport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sports");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.TrainingSession", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -393,31 +373,31 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 
                     b.Property<int>("Capacity")
                         .HasColumnType("int")
-                        .HasMaxLength(3);
+                        .HasMaxLength(30);
 
-                    b.Property<string>("ClassDay")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(40)")
-                        .HasMaxLength(40);
+                    b.Property<int?>("CoachId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
-
-                    b.Property<string>("Schedule")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
+                    b.Property<int?>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SportId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Sports");
+                    b.HasIndex("CoachId");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.HasIndex("SportId");
+
+                    b.ToTable("TrainingSessions");
                 });
 
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.User", b =>
@@ -427,6 +407,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("BirhtDay")
+                        .HasColumnType("datetime2")
+                        .HasMaxLength(15);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -438,6 +422,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int>("EnrollmentNumber")
+                        .HasColumnType("int")
+                        .HasMaxLength(15);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -467,8 +455,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -494,6 +482,23 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.WeekDay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WeekDays");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -545,6 +550,75 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.AdditionalSkill", b =>
+                {
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Coach", "Coach")
+                        .WithMany("AdditionalSkills")
+                        .HasForeignKey("CoachId");
+
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Sport", "sport")
+                        .WithMany("AdditionalSkills")
+                        .HasForeignKey("sportId");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Admin", b =>
+                {
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Coach", b =>
+                {
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Member", b =>
+                {
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.MembershipType", null)
+                        .WithMany("Members")
+                        .HasForeignKey("MembershipTypeId");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Permit", b =>
+                {
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.MembershipType", "MembershipType")
+                        .WithMany("Permits")
+                        .HasForeignKey("MembershipTypeId");
+
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Sport", "Sport")
+                        .WithMany("Permits")
+                        .HasForeignKey("SportId");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Schedule", b =>
+                {
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Facility", "Facility")
+                        .WithMany("Schedules")
+                        .HasForeignKey("FacilityId");
+
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.WeekDay", "WeekDay")
+                        .WithMany("Schedules")
+                        .HasForeignKey("WeekDayId");
+                });
+
+            modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.TrainingSession", b =>
+                {
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Coach", "Coach")
+                        .WithMany("TrainingSessions")
+                        .HasForeignKey("CoachId");
+
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Schedule", "Schedule")
+                        .WithMany("TrainingSessions")
+                        .HasForeignKey("ScheduleId");
+
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Sport", "Sport")
+                        .WithMany("TrainingSessions")
+                        .HasForeignKey("SportId");
                 });
 #pragma warning restore 612, 618
         }
