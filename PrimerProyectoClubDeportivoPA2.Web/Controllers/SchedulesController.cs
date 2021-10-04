@@ -19,13 +19,14 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             _context = context;
         }
 
-        // GET: Schedules
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Schedules.ToListAsync());
+            return View(await _context.Schedules
+                 .Include(t => t.Facility)
+                 .Include(t => t.WeekDay)
+                 .ToListAsync());
         }
 
-        // GET: Schedules/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,7 +44,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(schedule);
         }
 
-        // GET: Schedules/Create
         public IActionResult Create()
         {
             return View();

@@ -10,18 +10,21 @@ using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
 
 namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
-    public class MembershipTypesController : Controller
+    public class AgendaController : Controller
     {
         private readonly DataContext _context;
 
-        public MembershipTypesController(DataContext context)
+        public AgendaController(DataContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MembershipTypes.ToListAsync());
+            return View(await _context.Agendas
+               .Include(t => t.TrainingSession)
+               .Include(t => t.Member)
+               .ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -31,14 +34,14 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 return NotFound();
             }
 
-            var membershipType = await _context.MembershipTypes
+            var agenda = await _context.Agendas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (membershipType == null)
+            if (agenda == null)
             {
                 return NotFound();
             }
 
-            return View(membershipType);
+            return View(agenda);
         }
 
         public IActionResult Create()
@@ -46,23 +49,23 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View();
         }
 
-        // POST: MembershipTypes/Create
+        // POST: Agenda/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Cost")] MembershipType membershipType)
+        public async Task<IActionResult> Create([Bind("Id")] Agenda agenda)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(membershipType);
+                _context.Add(agenda);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(membershipType);
+            return View(agenda);
         }
 
-        // GET: MembershipTypes/Edit/5
+        // GET: Agenda/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -70,22 +73,22 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 return NotFound();
             }
 
-            var membershipType = await _context.MembershipTypes.FindAsync(id);
-            if (membershipType == null)
+            var agenda = await _context.Agendas.FindAsync(id);
+            if (agenda == null)
             {
                 return NotFound();
             }
-            return View(membershipType);
+            return View(agenda);
         }
 
-        // POST: MembershipTypes/Edit/5
+        // POST: Agenda/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Cost")] MembershipType membershipType)
+        public async Task<IActionResult> Edit(int id, [Bind("Id")] Agenda agenda)
         {
-            if (id != membershipType.Id)
+            if (id != agenda.Id)
             {
                 return NotFound();
             }
@@ -94,12 +97,12 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             {
                 try
                 {
-                    _context.Update(membershipType);
+                    _context.Update(agenda);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MembershipTypeExists(membershipType.Id))
+                    if (!AgendaExists(agenda.Id))
                     {
                         return NotFound();
                     }
@@ -110,10 +113,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(membershipType);
+            return View(agenda);
         }
 
-        // GET: MembershipTypes/Delete/5
+        // GET: Agenda/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -121,30 +124,30 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 return NotFound();
             }
 
-            var membershipType = await _context.MembershipTypes
+            var agenda = await _context.Agendas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (membershipType == null)
+            if (agenda == null)
             {
                 return NotFound();
             }
 
-            return View(membershipType);
+            return View(agenda);
         }
 
-        // POST: MembershipTypes/Delete/5
+        // POST: Agenda/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var membershipType = await _context.MembershipTypes.FindAsync(id);
-            _context.MembershipTypes.Remove(membershipType);
+            var agenda = await _context.Agendas.FindAsync(id);
+            _context.Agendas.Remove(agenda);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MembershipTypeExists(int id)
+        private bool AgendaExists(int id)
         {
-            return _context.MembershipTypes.Any(e => e.Id == id);
+            return _context.Agendas.Any(e => e.Id == id);
         }
     }
 }

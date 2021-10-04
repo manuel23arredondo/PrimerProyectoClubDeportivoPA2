@@ -19,13 +19,14 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             _context = context;
         }
 
-        // GET: AdditionalSkills
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AdditionalSkills.ToListAsync());
+            return View(await _context.AdditionalSkills
+                .Include(t => t.Coach)
+                .Include(t => t.Sport)
+                .ToListAsync());
         }
 
-        // GET: AdditionalSkills/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,7 +44,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(additionalSkill);
         }
 
-        // GET: AdditionalSkills/Create
         public IActionResult Create()
         {
             return View();

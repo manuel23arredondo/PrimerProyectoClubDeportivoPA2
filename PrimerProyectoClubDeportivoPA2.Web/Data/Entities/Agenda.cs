@@ -9,6 +9,5 @@
 
         public TrainingSession TrainingSession { get; set; }
         public Member Member { get; set; }
-
     }
 }

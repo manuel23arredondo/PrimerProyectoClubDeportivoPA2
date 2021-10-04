@@ -19,13 +19,15 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             _context = context;
         }
 
-        // GET: TrainingSessions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TrainingSessions.ToListAsync());
+            return View(await _context.TrainingSessions
+                .Include(t => t.Schedule)
+                .Include(t => t.Sport)
+                .Include(t => t.Coach)
+                .ToListAsync());
         }
 
-        // GET: TrainingSessions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,7 +45,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(trainingSession);
         }
 
-        // GET: TrainingSessions/Create
         public IActionResult Create()
         {
             return View();

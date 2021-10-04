@@ -19,13 +19,14 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             _context = context;
         }
 
-        // GET: Members
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Members.ToListAsync());
+            return View(await _context.Members
+                .Include(t => t.User)
+                .Include(t => t.MembershipType)
+                .ToListAsync());
         }
 
-        // GET: Members/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,7 +44,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(member);
         }
 
-        // GET: Members/Create
         public IActionResult Create()
         {
             return View();

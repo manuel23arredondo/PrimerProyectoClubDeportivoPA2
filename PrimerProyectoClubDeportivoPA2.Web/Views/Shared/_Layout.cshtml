@@ -9,9 +9,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h1>CDO</h1></a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h1>JWY</h1></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,7 +22,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
-                        <li class="nav-item dropdown bg-success">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catálogos</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
@@ -41,21 +41,32 @@
                             </div>
                         </li>
 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catálogos</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" asp-area="" asp-controller="TrainingSessions" asp-action="Index">Sesiones de Entrenamientos</a>
+                                <div class="dropdown-divider"></div>
+
+                                <a class="dropdown-item" asp-area="" asp-controller="Permits" asp-action="Index">Permisos</a>
+                                <div class="dropdown-divider"></div>
+
+                                <a class="dropdown-item" asp-area="" asp-controller="Schedules" asp-action="Index">Horarios</a>
+                                <div class="dropdown-divider"></div>
+
+                                <a class="dropdown-item" asp-area="" asp-controller="Agenda" asp-action="Index">Agenda Miembros</a>
+                                <div class="dropdown-divider"></div>
+
+                            </div>
+                        </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Coach</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Coaches" asp-action="Index">Coaches</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Facilities</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Index">Miembros</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Member</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Memberships</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Sports</a>
-                        </li>
+
                     </ul>
                 </div>
             </div>

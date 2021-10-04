@@ -19,13 +19,11 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             _context = context;
         }
 
-        // GET: WeekDays
         public async Task<IActionResult> Index()
         {
             return View(await _context.WeekDays.ToListAsync());
         }
 
-        // GET: WeekDays/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,7 +41,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(weekDay);
         }
 
-        // GET: WeekDays/Create
         public IActionResult Create()
         {
             return View();

@@ -19,13 +19,11 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             _context = context;
         }
 
-        // GET: Facilities
         public async Task<IActionResult> Index()
         {
             return View(await _context.Facilities.ToListAsync());
         }
 
-        // GET: Facilities/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,7 +41,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(facility);
         }
 
-        // GET: Facilities/Create
         public IActionResult Create()
         {
             return View();

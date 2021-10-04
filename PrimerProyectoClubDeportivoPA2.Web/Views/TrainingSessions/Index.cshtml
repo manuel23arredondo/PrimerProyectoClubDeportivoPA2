@@ -1,19 +1,28 @@
 ﻿@model IEnumerable<PrimerProyectoClubDeportivoPA2.Web.Data.Entities.TrainingSession>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sesiones de Entrenamiento";
 }
 
-<h1>Index</h1>
+<h1>Sesiones de Entrenamiento</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Agregar Sesión de Entrenamiento</a>
 </p>
-<table class="table">
+<table class="table table-dark">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Coach.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sport.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Capacity)
@@ -28,12 +37,21 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Schedule)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coach.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sport.Name)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Capacity)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a> 
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning">Detalles</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
             </td>
         </tr>
 }

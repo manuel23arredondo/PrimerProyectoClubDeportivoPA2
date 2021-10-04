@@ -42,7 +42,7 @@
             if (!this.dataContext.Members.Any())
             {
                 var user = await CheckUser("Luis", "Perez", "272 862 4156", DateTime.Now, 1005858, "perez.luis@gmail.com", "123456");
-                var membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Id == 3);
+                var membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Name == "Platino");
                 await CheckMember(user, "Member", membershipType);
                 
                 user = await CheckUser("Samantha", "Lopez", "272 555 4666", DateTime.Now, 1001180, "samy@gmail.com", "123456");
@@ -310,6 +310,7 @@
             });
             await this.dataContext.SaveChangesAsync();
         }
+
         private async Task CheckAgenda(Member member, TrainingSession trainingSession)
         {
             this.dataContext.Agendas.Add(new Agenda
@@ -319,6 +320,7 @@
             });
             await this.dataContext.SaveChangesAsync();
         }
+
         private async Task CheckAdditionalSkill(string name, Coach coach, Sport sport)
         {
             this.dataContext.AdditionalSkills.Add(new AdditionalSkill
