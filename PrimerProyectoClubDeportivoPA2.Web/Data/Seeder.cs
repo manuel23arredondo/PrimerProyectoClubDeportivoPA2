@@ -39,6 +39,13 @@
                 await CheckCoach(user, "Coach", "$4200", "Tenista");
             }
 
+            if (!this.dataContext.MembershipTypes.Any())
+            {
+                await CheckMembershipType("Plata", "Te permite el acceso a los deportes: Fútbol, Basketball y Zumba", "$1500");
+                await CheckMembershipType("Oro", "Incluye todos los deportes de la membresía Plata además de Karate, Ping Pong y Atletismo", "$2500");
+                await CheckMembershipType("Platino", "Incluye todos los deportes de la membresía Oro además de Box, Natación, Clavados, Tennis y Golf", "$3500");
+            }
+
             if (!this.dataContext.Members.Any())
             {
                 var user = await CheckUser("Luis", "Perez", "272 862 4156", DateTime.Now, 1005858, "perez.luis@gmail.com", "123456");
@@ -101,13 +108,6 @@
                 await CheckFacility("Explanada-2", "Igualmente cuenta con techo retraíble y con tatami al centro", "EX002");
                 await CheckFacility("Gimnasio", "Contamos con +50 equipos para ejercitarse, zona de cardio, zona de pesas y ring de boxeo", "GM001");
                 await CheckFacility("Campo multiusos", "Cuenta con pista de atletismo de tartán con 6 carriles", "CM007");
-            }
-
-            if (!this.dataContext.MembershipTypes.Any())
-            {
-                await CheckMembershipType("Plata", "Te permite el acceso a los deportes: Fútbol, Basketball y Zumba", "$1500");
-                await CheckMembershipType("Oro", "Incluye todos los deportes de la membresía Plata además de Karate, Ping Pong y Atletismo", "$2500");
-                await CheckMembershipType("Platino", "Incluye todos los deportes de la membresía Oro además de Box, Natación, Clavados, Tennis y Golf", "$3500");
             }
 
             if (!this.dataContext.Schedules.Any())
