@@ -25,6 +25,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 .Include(t => t.Schedule)
                 .Include(t => t.Sport)
                 .Include(t => t.Coach)
+                .ThenInclude(c => c.User)
                 .ToListAsync());
         }
 
