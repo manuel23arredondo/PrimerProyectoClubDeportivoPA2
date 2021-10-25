@@ -22,6 +22,10 @@
         [Display(Name = "Descripción")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "{0} es obligatorio.")]
+        [Display(Name = "Imagen")]
+        public string ImageUrl { get; set; }
+
         public ICollection<Schedule> Schedules { get; set; }
     }
 }

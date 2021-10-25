@@ -17,6 +17,10 @@
         [Display(Name = "Especialidad")]
         public string Expertise { get; set; }
 
+        [Required(ErrorMessage = "{0} es obligatorio.")]
+        [Display(Name = "Imagen")]
+        public string ImageUrl { get; set; }
+
         public User User { get; set; }
         public ICollection<TrainingSession> TrainingSessions { get; set; }
         public ICollection<AdditionalSkill> AdditionalSkills { get; set; }
