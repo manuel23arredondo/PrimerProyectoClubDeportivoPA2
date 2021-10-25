@@ -46,13 +46,7 @@
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new FacilityViewModel
-            {
-                 
-            };
-
-            return View(model);
-
+            return View();
         }
 
         [HttpPost]
