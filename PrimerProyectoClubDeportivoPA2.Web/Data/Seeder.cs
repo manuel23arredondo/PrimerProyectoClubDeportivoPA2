@@ -32,11 +32,11 @@
             if (!this.dataContext.Coaches.Any())
             {
                 var user = await CheckUser("Armando", "Lopez", "272 115 0000", DateTime.Now, 2001515, "armando.l@gmail.com", "123456");
-                await CheckCoach(user, "Coach", "$5000", "Boxeador profesional");
+                await CheckCoach(user, "Coach", "$5000", "Boxeador profesional", "XXX");
                 user = await CheckUser("Antonio", "Ruiz", "272 155 1000", DateTime.Now, 2001555, "tony.rl@gmail.com", "123456");
-                await CheckCoach(user, "Coach", "$8500", "Clavadista profesional");
+                await CheckCoach(user, "Coach", "$8500", "Clavadista profesional", "XXX");
                 user = await CheckUser("Pedro", "Cortés", "272 895 0560", DateTime.Now, 2005555, "cortes.peter@gmail.com", "123456");
-                await CheckCoach(user, "Coach", "$4200", "Tenista");
+                await CheckCoach(user, "Coach", "$4200", "Tenista", "XXX");
             }
 
             if (!this.dataContext.MembershipTypes.Any())
@@ -50,21 +50,21 @@
             {
                 var user = await CheckUser("Luis", "Perez", "272 862 4156", DateTime.Now, 1005858, "perez.luis@gmail.com", "123456");
                 var membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Name == "Platino");
-                await CheckMember(user, "Member", membershipType);
+                await CheckMember(user, "Member", membershipType, "XXX");
                 
                 user = await CheckUser("Samantha", "Lopez", "272 555 4666", DateTime.Now, 1001180, "samy@gmail.com", "123456");
-                await CheckMember(user, "Member", membershipType);
+                await CheckMember(user, "Member", membershipType, "XXX");
 
                 user = await CheckUser("Porfirio", "Ruiz", "272 887 7531", DateTime.Now, 1001059, "porfirito@gmail.com", "123456");
-                await CheckMember(user, "Member", membershipType);
+                await CheckMember(user, "Member", membershipType, "XXX");
 
                 membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Name == "Oro");
                 user = await CheckUser("Rodrigo", "Armendariz", "272 100 8566", DateTime.Now, 1008555, "armendariz.rod@gmail.com", "123456");
-                await CheckMember(user, "Member", membershipType);
+                await CheckMember(user, "Member", membershipType, "XXX");
 
                 membershipType = dataContext.MembershipTypes.FirstOrDefault(c => c.Name == "Plata");
                 user = await CheckUser("Renato", "Ibarra", "272 851 7444", DateTime.Now, 1005744, "ibarra.rena@gmail.com", "123456");
-                await CheckMember(user, "Member", membershipType);
+                await CheckMember(user, "Member", membershipType, "XXX");
             }
 
             if (!this.dataContext.WeekDays.Any())
@@ -96,18 +96,18 @@
 
             if (!this.dataContext.Facilities.Any())
             {
-                await CheckFacility("Alberca olímpica", "Cuenta con 8 carriles, tiene una profundidad de 2.7m y calefacción", "AO001");
-                await CheckFacility("Alberca de clavados", "Cuenta con plataformas de clavados olímpicos tiene una profundidad de 5.4m, calefacción y jacuzzi", "AC002");
-                await CheckFacility("Cancha de Tenis (Arcilla)", "Recientemente inagurada cuenta con gradas alrededor y videoarbitraje", "CT001");
-                await CheckFacility("Cancha de Tenis (Pasto)", "Cuenta con gradas alrededor y videoarbitraje", "CT002");
-                await CheckFacility("Campo de Golf", "Cuenta con 18 hoyos, fosa de arena y carritos de golf", "CG003");
-                await CheckFacility("Campo de Baseball", "Cuenta con gradas para 200 personas, bancas de local y visitante y marcador digital", "CB004");
-                await CheckFacility("Campo de Fútbol", "Cuenta con gradas para 300 personas, vestidores, regaderas y sauna", "CF005");
-                await CheckFacility("Cancha de Basketball", "Cuenta con vestidores, tableros de acrílico y duela de madera", "CB006");
-                await CheckFacility("Explanada", "Cuenta con techo retraíble y sonido envolvente", "EX001");
-                await CheckFacility("Explanada-2", "Igualmente cuenta con techo retraíble y con tatami al centro", "EX002");
-                await CheckFacility("Gimnasio", "Contamos con +50 equipos para ejercitarse, zona de cardio, zona de pesas y ring de boxeo", "GM001");
-                await CheckFacility("Campo multiusos", "Cuenta con pista de atletismo de tartán con 6 carriles", "CM007");
+                await CheckFacility("Alberca olímpica", "Cuenta con 8 carriles, tiene una profundidad de 2.7m y calefacción", "AO001", "XXX");
+                await CheckFacility("Alberca de clavados", "Cuenta con plataformas de clavados olímpicos tiene una profundidad de 5.4m, calefacción y jacuzzi", "AC002", "XXX");
+                await CheckFacility("Cancha de Tenis (Arcilla)", "Recientemente inagurada cuenta con gradas alrededor y videoarbitraje", "CT001", "XXX");
+                await CheckFacility("Cancha de Tenis (Pasto)", "Cuenta con gradas alrededor y videoarbitraje", "CT002", "XXX");
+                await CheckFacility("Campo de Golf", "Cuenta con 18 hoyos, fosa de arena y carritos de golf", "CG003", "XXX");
+                await CheckFacility("Campo de Baseball", "Cuenta con gradas para 200 personas, bancas de local y visitante y marcador digital", "CB004", "XXX");
+                await CheckFacility("Campo de Fútbol", "Cuenta con gradas para 300 personas, vestidores, regaderas y sauna", "CF005", "XXX");
+                await CheckFacility("Cancha de Basketball", "Cuenta con vestidores, tableros de acrílico y duela de madera", "CB006", "XXX");
+                await CheckFacility("Explanada", "Cuenta con techo retraíble y sonido envolvente", "EX001", "XXX");
+                await CheckFacility("Explanada-2", "Igualmente cuenta con techo retraíble y con tatami al centro", "EX002", "XXX");
+                await CheckFacility("Gimnasio", "Contamos con +50 equipos para ejercitarse, zona de cardio, zona de pesas y ring de boxeo", "GM001","XXX");
+                await CheckFacility("Campo multiusos", "Cuenta con pista de atletismo de tartán con 6 carriles", "CM007", "XXX");
             }
 
             if (!this.dataContext.Schedules.Any())
@@ -218,24 +218,26 @@
             await userHelper.AddUserToRoleAsync(user, rol);
         }
 
-        private async Task CheckCoach(User user, string rol, string salary, string expertise)
+        private async Task CheckCoach(User user, string rol, string salary, string expertise, string imageUrl)
         {
             this.dataContext.Coaches.Add(new Coach 
             {
                 User = user,
                 Salary = salary,
-                Expertise = expertise
+                Expertise = expertise,
+                ImageUrl = imageUrl
             });
             await this.dataContext.SaveChangesAsync();
             await userHelper.AddUserToRoleAsync(user, rol);
         }
 
-        private async Task CheckMember(User user, string rol, MembershipType membershipType)
+        private async Task CheckMember(User user, string rol, MembershipType membershipType, string imageUrl)
         {
             this.dataContext.Members.Add(new Member 
             { 
                 User = user,
-                MembershipType = membershipType
+                MembershipType = membershipType,
+                ImageUrl = imageUrl
             });
             await this.dataContext.SaveChangesAsync();
             await userHelper.AddUserToRoleAsync(user, rol);
@@ -253,13 +255,14 @@
             await this.dataContext.SaveChangesAsync();
         }
 
-        private async Task CheckFacility(string name, string description, string code)
+        private async Task CheckFacility(string name, string description, string code, string imageUrl)
         {
             this.dataContext.Facilities.Add(new Facility
             {
                 Name = name,
                 Description = description,
-                Code = code
+                Code = code,
+                ImageUrl = imageUrl
             });
             await this.dataContext.SaveChangesAsync();
         }

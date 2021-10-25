@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,7 +58,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(maxLength: 12, nullable: false),
                     Name = table.Column<string>(maxLength: 25, nullable: false),
-                    Description = table.Column<string>(maxLength: 100, nullable: false)
+                    Description = table.Column<string>(maxLength: 100, nullable: false),
+                    ImageUrl = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -239,6 +240,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Salary = table.Column<string>(maxLength: 8, nullable: false),
                     Expertise = table.Column<string>(maxLength: 30, nullable: false),
+                    ImageUrl = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -258,6 +260,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageUrl = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     MembershipTypeId = table.Column<int>(nullable: true)
                 },
@@ -341,7 +344,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 30, nullable: false),
                     CoachId = table.Column<int>(nullable: true),
-                    sportId = table.Column<int>(nullable: true)
+                    SportId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -353,8 +356,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AdditionalSkills_Sports_sportId",
-                        column: x => x.sportId,
+                        name: "FK_AdditionalSkills_Sports_SportId",
+                        column: x => x.SportId,
                         principalTable: "Sports",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -427,9 +430,9 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 column: "CoachId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AdditionalSkills_sportId",
+                name: "IX_AdditionalSkills_SportId",
                 table: "AdditionalSkills",
-                column: "sportId");
+                column: "SportId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_UserId",

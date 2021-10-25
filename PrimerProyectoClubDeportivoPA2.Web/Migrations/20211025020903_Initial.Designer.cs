@@ -10,14 +10,14 @@ using PrimerProyectoClubDeportivoPA2.Web.Data;
 namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211003213709_initial")]
-    partial class initial
+    [Migration("20211025020903_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.15")
+                .HasAnnotation("ProductVersion", "3.1.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -167,14 +167,14 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.Property<int?>("sportId")
+                    b.Property<int?>("SportId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CoachId");
 
-                    b.HasIndex("sportId");
+                    b.HasIndex("SportId");
 
                     b.ToTable("AdditionalSkills");
                 });
@@ -230,6 +230,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Salary")
                         .IsRequired()
                         .HasColumnType("nvarchar(8)")
@@ -262,6 +266,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(25)")
@@ -278,6 +286,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MembershipTypeId")
                         .HasColumnType("int");
@@ -589,9 +601,9 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .WithMany("AdditionalSkills")
                         .HasForeignKey("CoachId");
 
-                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Sport", "sport")
+                    b.HasOne("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Sport", "Sport")
                         .WithMany("AdditionalSkills")
-                        .HasForeignKey("sportId");
+                        .HasForeignKey("SportId");
                 });
 
             modelBuilder.Entity("PrimerProyectoClubDeportivoPA2.Web.Data.Entities.Admin", b =>

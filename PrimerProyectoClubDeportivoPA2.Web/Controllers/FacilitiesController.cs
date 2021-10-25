@@ -1,68 +1,82 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PrimerProyectoClubDeportivoPA2.Web.Data;
-using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
-
-namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
+﻿namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using PrimerProyectoClubDeportivoPA2.Web.Data;
+    using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
+    using PrimerProyectoClubDeportivoPA2.Web.Helpers;
+    using PrimerProyectoClubDeportivoPA2.Web.Models;
+    using System.Linq;
+    using System.Threading.Tasks;
     public class FacilitiesController : Controller
     {
-        private readonly DataContext _context;
+        private readonly DataContext dataContext;
+        private readonly IImageHelper imageHelper;
 
-        public FacilitiesController(DataContext context)
+
+        public FacilitiesController(DataContext dataContext,
+            IImageHelper imageHelper)
         {
-            _context = context;
+            this.dataContext = dataContext;
+            this.imageHelper = imageHelper;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Facilities.ToListAsync());
+            return View(await this.dataContext.Facilities.ToListAsync());
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var facility = await _context.Facilities
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (facility == null)
-            {
-                return NotFound();
-            }
+        //    var facility = await dataContext.Facilities
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (facility == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(facility);
-        }
+        //    return View(facility);
+        //}
 
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var model = new FacilityViewModel
+            {
+                 
+            };
+
+            return View(model);
+
         }
 
-        // POST: Facilities/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Code,Name,Description")] Facility facility)
+        public async Task<IActionResult> Create(FacilityViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(facility);
-                await _context.SaveChangesAsync();
+                var facility = new Facility
+                {
+                    Name = model.Name,
+                    Code = model.Code,
+                    Description = model.Description,
+                    ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                        model.ImageFile,
+                        model.Name,
+                        "facilities") : string.Empty)
+                };
+                this.dataContext.Add(facility);
+                await this.dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(facility);
+            return View(model);
         }
 
-        // GET: Facilities/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -70,7 +84,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 return NotFound();
             }
 
-            var facility = await _context.Facilities.FindAsync(id);
+            var facility = await dataContext.Facilities.FindAsync(id);
             if (facility == null)
             {
                 return NotFound();
@@ -94,8 +108,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             {
                 try
                 {
-                    _context.Update(facility);
-                    await _context.SaveChangesAsync();
+                    dataContext.Update(facility);
+                    await dataContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,7 +135,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 return NotFound();
             }
 
-            var facility = await _context.Facilities
+            var facility = await dataContext.Facilities
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (facility == null)
             {
@@ -136,15 +150,15 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var facility = await _context.Facilities.FindAsync(id);
-            _context.Facilities.Remove(facility);
-            await _context.SaveChangesAsync();
+            var facility = await dataContext.Facilities.FindAsync(id);
+            dataContext.Facilities.Remove(facility);
+            await dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FacilityExists(int id)
         {
-            return _context.Facilities.Any(e => e.Id == id);
+            return dataContext.Facilities.Any(e => e.Id == id);
         }
     }
 }
