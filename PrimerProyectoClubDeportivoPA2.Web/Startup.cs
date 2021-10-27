@@ -68,6 +68,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseRouting();
 
