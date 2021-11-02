@@ -22,7 +22,7 @@
         Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
 
         Task<SignInResult> ValidatePasswordAsync(User user, string password);
-        Task LoginAsync(string email, string password, object rememberMe);
+
         Task CheckRoleAsync(string roleName);
 
         IEnumerable<SelectListItem> GetComboRoles();
