@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.User.EnrollmentNumber)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -39,9 +42,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.User.PhoneNumber)
             </td>
-            <th>
+            <td>
                 @Html.DisplayFor(model => item.User.EnrollmentNumber)
-            </th>
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="@Url.Content(item.ImageUrl)" style="width:100px; height:auto;"/>
+                }    
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning">Detalles</a>

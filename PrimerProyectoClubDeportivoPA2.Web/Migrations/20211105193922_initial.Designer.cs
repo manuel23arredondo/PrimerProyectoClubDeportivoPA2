@@ -10,8 +10,8 @@ using PrimerProyectoClubDeportivoPA2.Web.Data;
 namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211025020903_Initial")]
-    partial class Initial
+    [Migration("20211105193922_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -186,6 +186,9 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -267,7 +270,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

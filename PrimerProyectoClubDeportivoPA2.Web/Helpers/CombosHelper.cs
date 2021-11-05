@@ -27,5 +27,33 @@
             });
             return list;
         }
+        public IEnumerable<SelectListItem> GetComboWeekdays()
+        {
+            var list = this.dataContext.WeekDays.Select(b => new SelectListItem
+            {
+                Text = b.Name,
+                Value = $"{b.Id}"
+            }).ToList();
+            list.Insert(0, new SelectListItem
+            {
+                Text = "(Seleccciona un día",
+                Value = "0"
+            });
+            return list;
+        }
+        public IEnumerable<SelectListItem> GetComboFacilities()
+        {
+            var list = this.dataContext.Facilities.Select(b => new SelectListItem
+            {
+                Text = b.Name,
+                Value = $"{b.Id}"
+            }).ToList();
+            list.Insert(0, new SelectListItem
+            {
+                Text = "(Seleccciona una instalación",
+                Value = "0"
+            });
+            return list;
+        }
     }
 }

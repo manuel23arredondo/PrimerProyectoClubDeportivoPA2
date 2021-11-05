@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,7 +59,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     Code = table.Column<string>(maxLength: 12, nullable: false),
                     Name = table.Column<string>(maxLength: 25, nullable: false),
                     Description = table.Column<string>(maxLength: 100, nullable: false),
-                    ImageUrl = table.Column<string>(nullable: false)
+                    ImageUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,6 +134,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageUrl = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

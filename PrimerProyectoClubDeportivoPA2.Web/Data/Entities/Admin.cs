@@ -6,6 +6,8 @@
         [Display(Name = "Clave")]
         public int Id { get; set; }
 
+        [Display (Name = "Imagen")]
+        public string ImageUrl { get; set; }
         public User User { get; set; }
     }
 }

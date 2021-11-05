@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PrimerProyectoClubDeportivoPA2.Web.Data;
-using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
-
-namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
+﻿namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using PrimerProyectoClubDeportivoPA2.Web.Data;
+    using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
+    using PrimerProyectoClubDeportivoPA2.Web.Helpers;
+    using System.Linq;
+    using System.Threading.Tasks;
     public class AdminsController : Controller
     {
         private readonly DataContext _context;
+        private readonly IImageHelper imageHelper;
 
-        public AdminsController(DataContext context)
+        public AdminsController(DataContext dataContext,
+            IImageHelper imageHelper)
         {
-            _context = context;
+            this._context = dataContext;
+            this.imageHelper = imageHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -48,9 +48,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View();
         }
 
-        // POST: Admins/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id")] Admin admin)
@@ -64,7 +61,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(admin);
         }
 
-        // GET: Admins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,9 +76,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(admin);
         }
 
-        // POST: Admins/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id")] Admin admin)
@@ -115,7 +108,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(admin);
         }
 
-        // GET: Admins/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +125,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(admin);
         }
 
-        // POST: Admins/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

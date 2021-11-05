@@ -9,6 +9,7 @@
     using PrimerProyectoClubDeportivoPA2.Web.Models;
     using System.Linq;
     using System.Threading.Tasks;
+    
     [Authorize(Roles = "Admin")]
     public class FacilitiesController : Controller
     {
@@ -28,22 +29,22 @@
             return View(await this.dataContext.Facilities.ToListAsync());
         }
 
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var facility = await dataContext.Facilities
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (facility == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var facility = await dataContext.Facilities
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (facility == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(facility);
-        //}
+            return View(facility);
+        }
 
         [HttpGet]
         public IActionResult Create()
@@ -119,6 +120,8 @@
             return View(model);
         }
 
+
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,7 +139,6 @@
             return View(facility);
         }
 
-        // POST: Facilities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
