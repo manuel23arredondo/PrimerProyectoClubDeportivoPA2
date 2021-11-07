@@ -7,12 +7,13 @@
     using PrimerProyectoClubDeportivoPA2.Web.Helpers;
     using PrimerProyectoClubDeportivoPA2.Web.Models;
     using System.Threading.Tasks;
-    public class SchedulesController : Controller
+
+    public class PermitsController : Controller
     {
         private readonly DataContext dataContext;
         private readonly ICombosHelper combosHelper;
 
-        public SchedulesController(DataContext dataContext,
+        public PermitsController(DataContext dataContext,
             ICombosHelper combosHelper)
         {
             this.dataContext = dataContext;
@@ -21,36 +22,35 @@
 
         public async Task<IActionResult> Index()
         {
-            return View(await this.dataContext.Schedules
-                .Include(f => f.Facility)
-                .Include(w => w.WeekDay)
+            return View(await this.dataContext.Permits
+                .Include(m => m.MembershipType)
+                .Include(s => s.Sport)
                 .ToListAsync());
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new ScheduleViewModel
+            var model = new PermitViewModel
             {
-                Facilities = this.combosHelper.GetComboFacilities(),
-                WeekDays = this.combosHelper.GetComboWeekdays()
+                MembershipTypes = this.combosHelper.GetComboMembershipTypes(),
+                Sports = this.combosHelper.GetComboSports()
             };
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ScheduleViewModel model)
+        public async Task<IActionResult> Create(PermitViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var schedule = new Schedule
+                var permit = new Permit
                 {
-                    StartingHour = model.StartingHour,
-                    FinishingHour = model.FinishingHour,
-                    Facility = await this.dataContext.Facilities.FindAsync(model.FacilityId),
-                    WeekDay = await this.dataContext.WeekDays.FindAsync(model.WeekDayId)
+                    Name = model.Name,
+                    MembershipType = await this.dataContext.MembershipTypes.FindAsync(model.MembershipTypeId),
+                    Sport = await this.dataContext.Sports.FindAsync(model.SportId)
                 };
-                this.dataContext.Add(schedule);
+                this.dataContext.Add(permit);
                 await this.dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -65,46 +65,44 @@
                 return NotFound();
             }
 
-            var schedule = await this.dataContext.Schedules
-                .Include(f => f.Facility)
-                .Include(w => w.WeekDay)
+            var permit = await this.dataContext.Permits
+                .Include(m => m.MembershipType)
+                .Include(s => s.Sport)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (schedule == null)
+            if (permit == null)
             {
                 return NotFound();
             }
 
-            var model = new ScheduleViewModel
+            var model = new PermitViewModel
             {
-                StartingHour = schedule.StartingHour,
-                FinishingHour = schedule.FinishingHour,
-                Facility = schedule.Facility,
-                FacilityId = schedule.Facility.Id,
-                Facilities = this.combosHelper.GetComboFacilities(),
-                WeekDay = schedule.WeekDay,
-                WeekDayId = schedule.WeekDay.Id,
-                WeekDays = this.combosHelper.GetComboWeekdays(),
+                Name = permit.Name,
+                MembershipType = permit.MembershipType,
+                MembershipTypeId = permit.MembershipType.Id,
+                MembershipTypes = this.combosHelper.GetComboMembershipTypes(),
+                Sport = permit.Sport,
+                SportId = permit.Sport.Id,
+                Sports = this.combosHelper.GetComboSports(),
             };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ScheduleViewModel model)
+        public async Task<IActionResult> Edit(PermitViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var schedule = new Schedule
+                var permit = new Permit
                 {
                     Id = model.Id,
-                    StartingHour = model.StartingHour,
-                    FinishingHour = model.FinishingHour,
-                    Facility = await this.dataContext.Facilities.FindAsync(model.FacilityId),
-                    WeekDay = await this.dataContext.WeekDays.FindAsync(model.WeekDayId)
+                    Name = model.Name,
+                    MembershipType = await this.dataContext.MembershipTypes.FindAsync(model.MembershipTypeId),
+                    Sport = await this.dataContext.Sports.FindAsync(model.SportId)
                 };
 
-                this.dataContext.Update(schedule);
+                this.dataContext.Update(permit);
                 await this.dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -118,17 +116,17 @@
                 return NotFound();
             }
 
-            var schedule = await dataContext.Schedules
-                .Include(f => f.Facility)
-                .Include(w => w.WeekDay)
+            var permit = await dataContext.Permits
+                .Include(m => m.MembershipType)
+                .Include(s => s.Sport)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (schedule == null)
+            if (permit == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(permit);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -138,25 +136,25 @@
                 return NotFound();
             }
 
-            var schedule = await dataContext.Schedules
-                .Include(f => f.Facility)
-                .Include(w => w.WeekDay)
+            var permit = await dataContext.Permits
+                .Include(m => m.MembershipType)
+                .Include(s => s.Sport)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (schedule == null)
+            if (permit == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(permit);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var schedule = await dataContext.Schedules.FindAsync(id);
-            dataContext.Schedules.Remove(schedule);
+            var permit = await dataContext.Permits.FindAsync(id);
+            dataContext.Permits.Remove(permit);
             await dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

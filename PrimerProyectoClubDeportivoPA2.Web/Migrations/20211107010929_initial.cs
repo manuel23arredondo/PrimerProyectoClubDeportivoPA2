@@ -315,8 +315,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StartingHour = table.Column<DateTime>(maxLength: 25, nullable: false),
-                    FinishingHour = table.Column<DateTime>(maxLength: 25, nullable: false),
+                    StartingHour = table.Column<DateTime>(nullable: false),
+                    FinishingHour = table.Column<DateTime>(nullable: false),
                     WeekDayId = table.Column<int>(nullable: true),
                     FacilityId = table.Column<int>(nullable: true)
                 },
@@ -371,7 +371,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 30, nullable: false),
-                    Capacity = table.Column<int>(maxLength: 30, nullable: false),
+                    Capacity = table.Column<string>(maxLength: 10, nullable: false),
                     ScheduleId = table.Column<int>(nullable: true),
                     CoachId = table.Column<int>(nullable: true),
                     SportId = table.Column<int>(nullable: true)

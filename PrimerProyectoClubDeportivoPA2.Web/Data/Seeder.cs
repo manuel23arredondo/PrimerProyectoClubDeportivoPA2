@@ -132,14 +132,14 @@
                 var coach = dataContext.Coaches.FirstOrDefault(c => c.Id == 1);
                 var sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Box");
                 var schedule = dataContext.Schedules.FirstOrDefault(c => c.Id == 1);
-                await CheckTrainingSession("Boxeo avanzado", coach, sport, schedule, 10);
+                await CheckTrainingSession("Boxeo avanzado", coach, sport, schedule, "10");
 
-                await CheckTrainingSession("Boxeo principiante", coach, sport, schedule, 10);
+                await CheckTrainingSession("Boxeo principiante", coach, sport, schedule, "10");
 
                 coach = dataContext.Coaches.FirstOrDefault(c => c.Id == 2);
                 sport = dataContext.Sports.FirstOrDefault(c => c.Name == "Clavados");
                 schedule = dataContext.Schedules.FirstOrDefault(c => c.Id == 3);
-                await CheckTrainingSession("Clavados intermedio", coach, sport, schedule, 20);
+                await CheckTrainingSession("Clavados intermedio", coach, sport, schedule, "20");
             }
 
             if (!this.dataContext.Permits.Any())
@@ -301,7 +301,7 @@
             await this.dataContext.SaveChangesAsync();
         }
 
-        private async Task CheckTrainingSession(string name, Coach coach, Sport sport, Schedule schedule, int capacity)
+        private async Task CheckTrainingSession(string name, Coach coach, Sport sport, Schedule schedule, string capacity)
         {
             this.dataContext.TrainingSessions.Add(new TrainingSession
             {

@@ -9,12 +9,14 @@
         public int Id { get; set; }      
 
         [Required(ErrorMessage = "{0} es obligatorio")]
-        [MaxLength(25, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd H:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Hora de inicio")]
         public DateTime StartingHour { get; set; }
 
         [Required(ErrorMessage = "{0} es obligatorio")]
-        [MaxLength(25, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd H:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Hora de término")]
         public DateTime FinishingHour { get; set; }
         

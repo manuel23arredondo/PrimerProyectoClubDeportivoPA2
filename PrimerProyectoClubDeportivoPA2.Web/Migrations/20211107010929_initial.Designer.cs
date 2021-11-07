@@ -10,7 +10,7 @@ using PrimerProyectoClubDeportivoPA2.Web.Data;
 namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211105193922_initial")]
+    [Migration("20211107010929_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -373,12 +373,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FinishingHour")
-                        .HasColumnType("datetime2")
-                        .HasMaxLength(25);
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartingHour")
-                        .HasColumnType("datetime2")
-                        .HasMaxLength(25);
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("WeekDayId")
                         .HasColumnType("int");
@@ -416,9 +414,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int")
-                        .HasMaxLength(30);
+                    b.Property<string>("Capacity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.Property<int?>("CoachId")
                         .HasColumnType("int");
