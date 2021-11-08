@@ -4,7 +4,7 @@
     ViewData["Title"] = "Crear Miembro";
 }
 
-<h1>Crear nuevo Miembro</h1>
+<h1>Crear</h1>
 
 <h4>Miembro</h4>
 <hr />
@@ -13,16 +13,17 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-success" />
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index" class ="btn btn-info">Regresar a la lista</a>
+    <a asp-action="Index" class="btn btn-info">Regresar a la lista</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

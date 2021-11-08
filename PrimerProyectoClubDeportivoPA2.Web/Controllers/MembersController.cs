@@ -1,31 +1,30 @@
-﻿namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using PrimerProyectoClubDeportivoPA2.Web.Data;
+using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
+
+namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using PrimerProyectoClubDeportivoPA2.Web.Data;
-    using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
-    using PrimerProyectoClubDeportivoPA2.Web.Helpers;
-    using System.Linq;
-    using System.Threading.Tasks;
-    
     [Authorize(Roles="Admin")]
-    public class AdminsController : Controller
+    public class MembersController : Controller
     {
         private readonly DataContext _context;
-        private readonly IImageHelper imageHelper;
 
-        public AdminsController(DataContext dataContext,
-            IImageHelper imageHelper)
+        public MembersController(DataContext context)
         {
-            this._context = dataContext;
-            this.imageHelper = imageHelper;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Admins
-                .Include(t => t.User)
+            return View(await _context.Members
+                .Include(u => u.User)
                 .ToListAsync());
         }
 
@@ -36,16 +35,17 @@
                 return NotFound();
             }
 
-            var admin = await _context.Admins
+            var member = await _context.Members
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (admin == null)
+            if (member == null)
             {
                 return NotFound();
             }
 
-            return View(admin);
+            return View(member);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -53,17 +53,18 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Admin admin)
+        public async Task<IActionResult> Create([Bind("Id,ImageUrl")] Member member)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(admin);
+                _context.Add(member);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(admin);
+            return View(member);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -71,19 +72,19 @@
                 return NotFound();
             }
 
-            var admin = await _context.Admins.FindAsync(id);
-            if (admin == null)
+            var member = await _context.Members.FindAsync(id);
+            if (member == null)
             {
                 return NotFound();
             }
-            return View(admin);
+            return View(member);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Admin admin)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl")] Member member)
         {
-            if (id != admin.Id)
+            if (id != member.Id)
             {
                 return NotFound();
             }
@@ -92,12 +93,12 @@
             {
                 try
                 {
-                    _context.Update(admin);
+                    _context.Update(member);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdminExists(admin.Id))
+                    if (!MemberExists(member.Id))
                     {
                         return NotFound();
                     }
@@ -108,9 +109,10 @@
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(admin);
+            return View(member);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -118,29 +120,29 @@
                 return NotFound();
             }
 
-            var admin = await _context.Admins
+            var member = await _context.Members
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (admin == null)
+            if (member == null)
             {
                 return NotFound();
             }
 
-            return View(admin);
+            return View(member);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var admin = await _context.Admins.FindAsync(id);
-            _context.Admins.Remove(admin);
+            var member = await _context.Members.FindAsync(id);
+            _context.Members.Remove(member);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdminExists(int id)
+        private bool MemberExists(int id)
         {
-            return _context.Admins.Any(e => e.Id == id);
+            return _context.Members.Any(e => e.Id == id);
         }
     }
 }

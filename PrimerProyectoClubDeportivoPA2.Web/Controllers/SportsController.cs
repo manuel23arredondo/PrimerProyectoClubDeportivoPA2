@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PrimerProyectoClubDeportivoPA2.Web.Data;
-using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
-
-namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
+﻿namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using PrimerProyectoClubDeportivoPA2.Web.Data;
+    using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
     public class SportsController : Controller
     {
         private readonly DataContext _context;
@@ -41,14 +41,13 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(sport);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
-
-        // POST: Sports/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+   
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Sport sport)
@@ -62,7 +61,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(sport);
         }
 
-        // GET: Sports/Edit/5
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,9 +78,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(sport);
         }
 
-        // POST: Sports/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Sport sport)
@@ -113,7 +110,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(sport);
         }
 
-        // GET: Sports/Delete/5
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,7 +129,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View(sport);
         }
 
-        // POST: Sports/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

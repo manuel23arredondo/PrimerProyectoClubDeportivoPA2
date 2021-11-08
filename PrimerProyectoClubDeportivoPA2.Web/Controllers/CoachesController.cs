@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PrimerProyectoClubDeportivoPA2.Web.Data;
-using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
-
-namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
+﻿namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using PrimerProyectoClubDeportivoPA2.Web.Data;
+    using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
+    using Microsoft.AspNetCore.Authorization;
+
+    [Authorize(Roles = "Admin")]
     public class CoachesController : Controller
     {
         private readonly DataContext _context;
@@ -48,9 +50,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
             return View();
         }
 
-        // POST: Coaches/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Salary,Expertise")] Coach coach)

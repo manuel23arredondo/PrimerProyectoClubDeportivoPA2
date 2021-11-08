@@ -10,7 +10,6 @@
     using System.Linq;
     using System.Threading.Tasks;
     
-    [Authorize(Roles = "Admin")]
     public class FacilitiesController : Controller
     {
         private readonly DataContext dataContext;
@@ -46,6 +45,7 @@
             return View(facility);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -74,6 +74,7 @@
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -120,8 +121,8 @@
             return View(model);
         }
 
-
-
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

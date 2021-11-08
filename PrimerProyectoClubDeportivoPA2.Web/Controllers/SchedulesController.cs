@@ -1,5 +1,6 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using PrimerProyectoClubDeportivoPA2.Web.Data;
@@ -7,6 +8,7 @@
     using PrimerProyectoClubDeportivoPA2.Web.Helpers;
     using PrimerProyectoClubDeportivoPA2.Web.Models;
     using System.Threading.Tasks;
+    [Authorize(Roles = "Admin,Coach,Member")]
     public class SchedulesController : Controller
     {
         private readonly DataContext dataContext;
@@ -27,6 +29,7 @@
                 .ToListAsync());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -57,6 +60,7 @@
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -131,6 +135,7 @@
             return View(schedule);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

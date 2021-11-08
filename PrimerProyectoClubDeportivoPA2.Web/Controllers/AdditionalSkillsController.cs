@@ -1,5 +1,6 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using PrimerProyectoClubDeportivoPA2.Web.Data;
@@ -7,6 +8,8 @@
     using PrimerProyectoClubDeportivoPA2.Web.Helpers;
     using PrimerProyectoClubDeportivoPA2.Web.Models;
     using System.Threading.Tasks;
+    
+    [Authorize(Roles = "Admin,Coach,Member")]
 
     public class AdditionalSkillsController : Controller
     {
@@ -20,6 +23,7 @@
             this.combosHelper = combosHelper;
         }
 
+        [Authorize(Roles = "Admin,Coach,Member")]
         public async Task<IActionResult> Index()
         {
             return View(await this.dataContext.AdditionalSkills
@@ -29,6 +33,7 @@
                 .ToListAsync());
         }
 
+        [Authorize(Roles = "Admin,Coach")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -58,6 +63,7 @@
             return View(model);
         }
 
+        [Authorize(Roles = "Admin,Coach")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -109,6 +115,7 @@
             return View(model);
         }
 
+        [Authorize(Roles = "Admin,Coach,Member")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -130,6 +137,8 @@
             return View(additionalSkill);
         }
 
+        [Authorize(Roles = "Admin,Coach")]
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

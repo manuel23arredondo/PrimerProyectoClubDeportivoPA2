@@ -1,5 +1,6 @@
 ﻿namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using PrimerProyectoClubDeportivoPA2.Web.Data;
@@ -28,6 +29,7 @@
                 .ToListAsync());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -57,6 +59,7 @@
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -129,6 +132,7 @@
             return View(permit);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

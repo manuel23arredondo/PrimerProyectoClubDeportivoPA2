@@ -10,7 +10,7 @@ using PrimerProyectoClubDeportivoPA2.Web.Data;
 namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211107010929_initial")]
+    [Migration("20211107224516_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
