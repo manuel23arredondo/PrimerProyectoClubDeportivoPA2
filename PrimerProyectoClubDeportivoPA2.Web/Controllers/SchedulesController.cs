@@ -7,6 +7,7 @@
     using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
     using PrimerProyectoClubDeportivoPA2.Web.Helpers;
     using PrimerProyectoClubDeportivoPA2.Web.Models;
+    using System;
     using System.Threading.Tasks;
     [Authorize(Roles = "Admin,Coach,Member")]
     public class SchedulesController : Controller
@@ -136,6 +137,7 @@
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -152,7 +154,6 @@
             {
                 return NotFound();
             }
-
             return View(schedule);
         }
 
@@ -162,8 +163,16 @@
         {
             var schedule = await dataContext.Schedules.FindAsync(id);
             dataContext.Schedules.Remove(schedule);
-            await dataContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await dataContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "No se pueden eliminar registros");
+            }
+            return View(schedule);
         }
     }
 }

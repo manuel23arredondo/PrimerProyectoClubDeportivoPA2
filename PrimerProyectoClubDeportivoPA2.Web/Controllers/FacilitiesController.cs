@@ -7,6 +7,7 @@
     using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
     using PrimerProyectoClubDeportivoPA2.Web.Helpers;
     using PrimerProyectoClubDeportivoPA2.Web.Models;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     
@@ -146,8 +147,16 @@
         {
             var facility = await dataContext.Facilities.FindAsync(id);
             dataContext.Facilities.Remove(facility);
-            await dataContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await dataContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "No se pueden eliminar registros");
+            }
+            return View(facility);
         }
 
         private bool FacilityExists(int id)

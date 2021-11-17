@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
+    using System.Linq;
 
     public class DataContext : IdentityDbContext<User>
     {
@@ -23,5 +24,20 @@
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            var cascadeFKs = builder.Model
+           .G­etEntityTypes()
+           .SelectMany(t => t.GetForeignKeys())
+           .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Casca­de);
+            foreach (var fk in cascadeFKs)
+            {
+                fk.DeleteBehavior = DeleteBehavior.Restr­ict;
+            }
+
+            base.OnModelCreating(builder);
+        }
+
     }
 }

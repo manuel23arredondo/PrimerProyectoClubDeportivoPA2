@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using PrimerProyectoClubDeportivoPA2.Web.Data;
     using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     public class MembershipTypesController : Controller
@@ -129,8 +130,16 @@
         {
             var membershipType = await _context.MembershipTypes.FindAsync(id);
             _context.MembershipTypes.Remove(membershipType);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "No se pueden eliminar registros");
+            }
+            return View(membershipType);
         }
 
         private bool MembershipTypeExists(int id)

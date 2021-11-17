@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using PrimerProyectoClubDeportivoPA2.Web.Data;
     using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -131,8 +132,16 @@
         {
             var weekDay = await _context.WeekDays.FindAsync(id);
             _context.WeekDays.Remove(weekDay);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "No se pueden eliminar registros");
+            }
+            return View(weekDay);
         }
 
         private bool WeekDayExists(int id)

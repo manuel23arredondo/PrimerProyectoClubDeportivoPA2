@@ -135,8 +135,16 @@
         {
             var sport = await _context.Sports.FindAsync(id);
             _context.Sports.Remove(sport);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "No se pueden eliminar registros");           
+            }
+            return View(sport);
         }
 
         private bool SportExists(int id)
