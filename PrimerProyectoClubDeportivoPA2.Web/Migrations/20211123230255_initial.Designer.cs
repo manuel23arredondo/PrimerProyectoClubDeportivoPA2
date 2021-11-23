@@ -10,7 +10,7 @@ using PrimerProyectoClubDeportivoPA2.Web.Data;
 namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211122153502_initial")]
+    [Migration("20211123230255_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -497,6 +497,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 

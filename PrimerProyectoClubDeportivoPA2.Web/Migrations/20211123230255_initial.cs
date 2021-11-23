@@ -41,7 +41,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 15, nullable: true),
+                    PhoneNumber = table.Column<string>(maxLength: 15, nullable: false),
                     BirhtDate = table.Column<DateTime>(nullable: false),
                     EnrollmentNumber = table.Column<int>(nullable: false)
                 },

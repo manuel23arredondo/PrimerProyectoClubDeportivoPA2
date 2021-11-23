@@ -19,7 +19,7 @@
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd H:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Hora de término")]
         public DateTime FinishingHour { get; set; }
-        
+
         public WeekDay WeekDay { get; set; }
         public Facility Facility { get; set; }
         public ICollection<TrainingSession> TrainingSessions { get; set; }

@@ -495,6 +495,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 

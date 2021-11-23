@@ -16,6 +16,7 @@
         [Display(Name = "Apellidos")]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "{0} es obligatorio")]
         [MaxLength(15, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         [Display(Name = "Número de celular")]
         public override string PhoneNumber { get; set; }

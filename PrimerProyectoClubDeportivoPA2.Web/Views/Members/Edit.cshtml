@@ -60,6 +60,12 @@
             </div>
         </form>
     </div>
+    <div class="col-md-8">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Url.Content(Model.ImageUrl)" style="width:100%;height:auto" />
+        }
+    </div>
 </div>
 
 <div>
