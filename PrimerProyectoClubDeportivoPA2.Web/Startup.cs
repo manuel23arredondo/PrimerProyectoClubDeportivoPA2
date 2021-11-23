@@ -51,6 +51,11 @@ namespace PrimerProyectoClubDeportivoPA2.Web
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddControllersWithViews();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

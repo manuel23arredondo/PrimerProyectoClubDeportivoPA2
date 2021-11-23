@@ -14,6 +14,11 @@
             this.userHelper = userHelper;
         }
 
+        public IActionResult NotAuthorized()
+        {
+            return this.View();
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -36,7 +41,7 @@
                     {
                         return this.RedirectToAction("Index", "Home");
                     }
-                this.ModelState.AddModelError(string.Empty, "Error");
+                this.ModelState.AddModelError(string.Empty, "Email/Contraseña incorrecta");
                 return this.View(model);
             }
             return this.View(model);

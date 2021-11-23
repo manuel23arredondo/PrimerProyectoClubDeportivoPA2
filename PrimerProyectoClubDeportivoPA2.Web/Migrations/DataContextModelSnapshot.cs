@@ -15,7 +15,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.18")
+                .HasAnnotation("ProductVersion", "3.1.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -184,8 +184,10 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Salary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -232,7 +234,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasMaxLength(30);
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salary")
@@ -288,7 +289,6 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MembershipTypeId")
@@ -451,8 +451,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BirhtDate")
-                        .HasColumnType("datetime2")
-                        .HasMaxLength(15);
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -466,8 +465,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("EnrollmentNumber")
-                        .HasColumnType("int")
-                        .HasMaxLength(15);
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()

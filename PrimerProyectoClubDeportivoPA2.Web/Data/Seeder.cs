@@ -26,7 +26,7 @@
             if (!this.dataContext.Admins.Any())
             {
                 var user = await CheckUser("Bill", "Gates", "272 560 8922", DateTime.Now, 1000000, "bill.microsoft@gmail.com", "123456");
-                await CheckAdmin(user, "Admin");
+                await CheckAdmin(user, "Admin", "$12000");
             }
 
             if (!this.dataContext.Coaches.Any())
@@ -211,9 +211,13 @@
             return user;
         }
 
-        private async Task CheckAdmin(User user, string rol)
+        private async Task CheckAdmin(User user, string rol, string salary)
         {
-            this.dataContext.Admins.Add(new Admin { User = user });
+            this.dataContext.Admins.Add(new Admin 
+            { 
+                User = user,
+                Salary = salary
+            });
             await this.dataContext.SaveChangesAsync();
             await userHelper.AddUserToRoleAsync(user, rol);
         }

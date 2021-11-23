@@ -9,8 +9,8 @@
 <p>
     <a asp-action="Create" class="btn btn-success">Crear nuevo miembro</a>
 </p>
-<table class="table">
-    <thead class="thead-dark">
+<table class="table table-dark">
+    <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.User.FullName)
@@ -23,6 +23,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.User.EnrollmentNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.BirhtDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MembershipType.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImageUrl)
@@ -45,8 +51,17 @@
             <th>
                 @Html.DisplayFor(model => item.User.EnrollmentNumber)
             </th>
+            <th>
+                @Html.DisplayFor(model => item.User.BirhtDate)
+            </th>
+            <th>
+                @Html.DisplayFor(model => item.MembershipType.Name)
+            </th>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="@Url.Content(item.ImageUrl)" style="width:100px;height:auto" />
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>

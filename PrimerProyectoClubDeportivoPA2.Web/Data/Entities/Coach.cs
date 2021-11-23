@@ -17,7 +17,6 @@
         [Display(Name = "Especialidad")]
         public string Expertise { get; set; }
 
-        [Required(ErrorMessage = "{0} es obligatorio.")]
         [Display(Name = "Imagen")]
         public string ImageUrl { get; set; }
 

@@ -7,7 +7,7 @@
 <h1>Sesiones de Entrenamiento</h1>
 
 <p>
-    @if (this.User.IsInRole("Admin"))
+    @if ((this.User.IsInRole("Admin")) || (this.User.IsInRole("Coach")))
     {
         <a asp-action="Create" class="btn btn-success">Agregar Sesión de Entrenamiento</a>
     }

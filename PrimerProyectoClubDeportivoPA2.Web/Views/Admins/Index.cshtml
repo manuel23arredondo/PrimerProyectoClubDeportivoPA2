@@ -9,8 +9,8 @@
 <p>
     <a asp-action="Create" class="btn btn-success">Crear nuevo Administrador</a>
 </p>
-<table class="table">
-    <thead class="thead-dark">
+<table class="table table-dark">
+    <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.User.FullName)
@@ -25,7 +25,10 @@
                 @Html.DisplayNameFor(model => model.User.EnrollmentNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
+                @Html.DisplayNameFor(model => model.User.BirhtDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
             </th>
             <th></th>
         </tr>
@@ -42,14 +45,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.User.PhoneNumber)
             </td>
-            <td>
+            <th>
                 @Html.DisplayFor(model => item.User.EnrollmentNumber)
-            </td>
+            </th>
+            <th>
+                @Html.DisplayFor(model => item.User.BirhtDate)
+            </th>
             <td>
-                @if (!string.IsNullOrEmpty(item.ImageUrl))
-                {
-                    <img src="@Url.Content(item.ImageUrl)" style="width:100px; height:auto;"/>
-                }    
+                @Html.DisplayFor(modelItem => item.Salary)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>

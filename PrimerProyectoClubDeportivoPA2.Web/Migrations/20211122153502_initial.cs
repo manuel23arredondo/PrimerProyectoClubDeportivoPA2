@@ -42,8 +42,8 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 15, nullable: true),
-                    BirhtDate = table.Column<DateTime>(maxLength: 15, nullable: false),
-                    EnrollmentNumber = table.Column<int>(maxLength: 15, nullable: false)
+                    BirhtDate = table.Column<DateTime>(nullable: false),
+                    EnrollmentNumber = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,7 +134,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageUrl = table.Column<string>(nullable: true),
+                    Salary = table.Column<string>(maxLength: 8, nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -241,7 +241,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Salary = table.Column<string>(maxLength: 8, nullable: false),
                     Expertise = table.Column<string>(maxLength: 30, nullable: false),
-                    ImageUrl = table.Column<string>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -261,7 +261,7 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageUrl = table.Column<string>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     MembershipTypeId = table.Column<int>(nullable: true)
                 },

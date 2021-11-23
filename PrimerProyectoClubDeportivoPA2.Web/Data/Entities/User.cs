@@ -24,12 +24,11 @@
         public string FullName => $"{LastName} {FirstName}";
 
         [Required(ErrorMessage = "{0} es obligatorio")]
-        [MaxLength(15, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]
+        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha de nacimiento")]
         public DateTime BirhtDate { get; set; }
 
         [Required(ErrorMessage = "{0} es obligatorio")]
-        [MaxLength(15, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]
         [Display(Name = "Matrícula")]
         public int EnrollmentNumber { get; set; }
     }

@@ -17,6 +17,9 @@
         [Display(Name = "Capacidad")]
         public string Capacity { get; set; }
 
+        //[Required]
+        //public User User { get; set; }
+
         public Schedule Schedule { get; set; }
         public Coach Coach { get; set; }
         public Sport Sport { get; set; }

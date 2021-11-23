@@ -7,7 +7,6 @@
         [Display(Name = "Clave")]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "{0} es obligatorio.")]
         [Display(Name = "Imagen")]
         public string ImageUrl { get; set; }
 

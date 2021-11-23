@@ -1,30 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PrimerProyectoClubDeportivoPA2.Web.Data;
-using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
-
-namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
+﻿namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
 {
-    [Authorize(Roles="Admin")]
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using PrimerProyectoClubDeportivoPA2.Web.Data;
+    using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
+    using PrimerProyectoClubDeportivoPA2.Web.Helpers;
+    using PrimerProyectoClubDeportivoPA2.Web.Models;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    [Authorize(Roles = "Admin")]
     public class MembersController : Controller
     {
-        private readonly DataContext _context;
+        private readonly DataContext dataContext;
+        private readonly IUserHelper userHelper;
+        private readonly IImageHelper imageHelper;
+        private readonly ICombosHelper combosHelper;
 
-        public MembersController(DataContext context)
+        public MembersController(DataContext dataContext, IImageHelper imageHelper, IUserHelper userHelper, ICombosHelper combosHelper)
         {
-            _context = context;
+            this.dataContext = dataContext;
+            this.imageHelper = imageHelper;
+            this.userHelper = userHelper;
+            this.combosHelper = combosHelper;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Members
+            return View(await dataContext.Members
                 .Include(u => u.User)
+                .Include(m => m.MembershipType)
                 .ToListAsync());
         }
 
@@ -35,7 +43,9 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Members
+            var member = await this.dataContext.Members
+                .Include(u => u.User)
+                .Include(m => m.MembershipType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (member == null)
             {
@@ -48,20 +58,54 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var model = new MemberViewModel
+            {
+                MembershipTypes = this.combosHelper.GetComboMembershipTypes()
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImageUrl")] Member member)
+        public async Task<IActionResult> Create(MemberViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(member);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var user = await userHelper.GetUserByIdAsync(model.User.Id);
+                if (user == null)
+                {
+                    user = new User
+                    {
+                        FirstName = model.User.FirstName,
+                        LastName = model.User.LastName,
+                        PhoneNumber = model.User.PhoneNumber,
+                        BirhtDate = model.User.BirhtDate,
+                        EnrollmentNumber = model.User.EnrollmentNumber,
+                        Email = model.User.Email,
+                        UserName = model.User.Email
+                    };
+                    var result = await userHelper.AddUserAsync(user, "123456");
+                    await userHelper.AddUserToRoleAsync(user, "Member");
+                    if (result == IdentityResult.Success)
+                    {
+                        var member = new Member
+                        {
+                            Id = model.Id,
+                            MembershipType = await this.dataContext.MembershipTypes.FindAsync(model.MembershipTypeId),
+                            ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                         model.ImageFile,
+                         model.User.FullName,
+                         "members") : string.Empty),
+                            User = await this.dataContext.Users.FindAsync(user.Id)
+                        };
+                        dataContext.Add(member);
+                        await dataContext.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    ModelState.AddModelError(string.Empty, "El email ingresado no está disponible");
+                }
             }
-            return View(member);
+            return View(model);
         }
 
         [HttpGet]
@@ -72,44 +116,61 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Members.FindAsync(id);
+            var member = await this.dataContext.Members
+                .Include(u => u.User)
+                .Include(m => m.MembershipType)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             if (member == null)
             {
                 return NotFound();
             }
-            return View(member);
+
+            var model = new MemberViewModel
+            {
+                Id = member.Id,
+                MembershipType = member.MembershipType,
+                MembershipTypeId = member.MembershipType.Id,
+                MembershipTypes = this.combosHelper.GetComboMembershipTypes(),
+                ImageUrl = member.ImageUrl,
+                User = member.User
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl")] Member member)
+        public async Task<IActionResult> Edit(MemberViewModel model)
         {
-            if (id != member.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                var user = await this.dataContext.Users.FindAsync(model.User.Id);
+                user.FirstName = model.User.FirstName;
+                user.LastName = model.User.LastName;
+                user.PhoneNumber = model.User.PhoneNumber;
+                user.BirhtDate = model.User.BirhtDate;
+                user.EnrollmentNumber = model.User.EnrollmentNumber;
+                user.Email = model.User.Email;
+                user.UserName = model.User.Email;
+
+                this.dataContext.Update(user);
+                await dataContext.SaveChangesAsync();
+
+                var member = new Member
                 {
-                    _context.Update(member);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MemberExists(member.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                    Id = model.Id,
+                    MembershipType = await this.dataContext.MembershipTypes.FindAsync(model.MembershipTypeId),
+                    ImageUrl = (model.ImageFile != null ? await imageHelper.UpdateImageAsync(
+                        model.ImageFile, model.ImageUrl) : model.ImageUrl),
+                    User = await this.dataContext.Users.FindAsync(model.User.Id)
+                };
+
+                this.dataContext.Update(member);
+                await dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(member);
+            return View(model);
         }
 
         [HttpGet]
@@ -120,8 +181,11 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Members
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var member = await this.dataContext.Members
+                .Include(u => u.User)
+                .Include(m => m.MembershipType)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             if (member == null)
             {
                 return NotFound();
@@ -134,15 +198,28 @@ namespace PrimerProyectoClubDeportivoPA2.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var member = await _context.Members.FindAsync(id);
-            _context.Members.Remove(member);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var member = await this.dataContext.Members
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            this.dataContext.Members.Remove(member);
+            var user = await dataContext.Users.FindAsync(member.User.Id);
+            dataContext.Users.Remove(user);
+
+            try
+            {
+                await dataContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "No se pueden eliminar registros");
+            }
+            return View(member);
         }
 
         private bool MemberExists(int id)
         {
-            return _context.Members.Any(e => e.Id == id);
+            return dataContext.Members.Any(e => e.Id == id);
         }
     }
 }

@@ -7,6 +7,7 @@
     using PrimerProyectoClubDeportivoPA2.Web.Data.Entities;
     using PrimerProyectoClubDeportivoPA2.Web.Helpers;
     using PrimerProyectoClubDeportivoPA2.Web.Models;
+    using System;
     using System.Threading.Tasks;
     [Authorize(Roles = "Admin,Coach,Member")]
     public class TrainingSessionsController : Controller
@@ -34,7 +35,7 @@
                 .ToListAsync());
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Coach")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -60,7 +61,7 @@
                     Schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId),
                     Sport = await this.dataContext.Sports.FindAsync(model.SportId)
                 };
-                this.dataContext.Add(trainingSession);
+                this.dataContext.TrainingSessions.Add(trainingSession);
                 await this.dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -180,8 +181,16 @@
         {
             var trainingSession = await dataContext.TrainingSessions.FindAsync(id);
             dataContext.TrainingSessions.Remove(trainingSession);
-            await dataContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await dataContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "No se pueden eliminar registros");
+            }
+            return View(trainingSession);
         }
     }
 }
