@@ -136,18 +136,23 @@
                 user.UserName = model.User.Email;
 
                 this.dataContext.Update(user);
+                var result = await userHelper.UpdateUserAsync(user);
                 await dataContext.SaveChangesAsync();
 
-                var admin = new Admin
+                if (result == IdentityResult.Success)
                 {
-                    Id = model.Id,
-                    Salary = model.Salary,
-                    User = await this.dataContext.Users.FindAsync(model.User.Id)
-                };
+                    var admin = new Admin
+                    {
+                        Id = model.Id,
+                        Salary = model.Salary,
+                        User = await this.dataContext.Users.FindAsync(model.User.Id)
+                    };
 
-                this.dataContext.Update(admin);
-                await dataContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    this.dataContext.Update(admin);
+                    await dataContext.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ModelState.AddModelError(string.Empty, "El email ingresado no está disponible");
             }
             return View(model);
         }

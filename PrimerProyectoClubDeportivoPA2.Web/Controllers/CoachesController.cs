@@ -144,21 +144,25 @@
                 user.UserName = model.User.Email;
 
                 this.dataContext.Update(user);
+                var result = await userHelper.UpdateUserAsync(user);
                 await dataContext.SaveChangesAsync();
 
-                var coach = new Coach
+                if (result == IdentityResult.Success)
                 {
-                    Id = model.Id,
-                    Salary = model.Salary,
-                    Expertise = model.Expertise,
-                    ImageUrl = (model.ImageFile != null ? await imageHelper.UpdateImageAsync(
-                        model.ImageFile, model.ImageUrl) : model.ImageUrl),
-                    User = await this.dataContext.Users.FindAsync(model.User.Id)
-                };
-
-                this.dataContext.Update(coach);
-                await dataContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    var coach = new Coach
+                    {
+                        Id = model.Id,
+                        Salary = model.Salary,
+                        Expertise = model.Expertise,
+                        ImageUrl = (model.ImageFile != null ? await imageHelper.UpdateImageAsync(
+                                            model.ImageFile, model.ImageUrl) : model.ImageUrl),
+                        User = await this.dataContext.Users.FindAsync(model.User.Id)
+                    };
+                    this.dataContext.Update(coach);
+                    await dataContext.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ModelState.AddModelError(string.Empty, "El email ingresado no está disponible");
             }
             return View(model);
         }
