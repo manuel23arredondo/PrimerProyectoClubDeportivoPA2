@@ -154,8 +154,8 @@
                         Id = model.Id,
                         Salary = model.Salary,
                         Expertise = model.Expertise,
-                        ImageUrl = (model.ImageFile != null ? await imageHelper.UpdateImageAsync(
-                                            model.ImageFile, model.ImageUrl) : model.ImageUrl),
+                        ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                                            model.ImageFile, "coach", "coaches") : model.ImageUrl),
                         User = await this.dataContext.Users.FindAsync(model.User.Id)
                     };
                     this.dataContext.Update(coach);

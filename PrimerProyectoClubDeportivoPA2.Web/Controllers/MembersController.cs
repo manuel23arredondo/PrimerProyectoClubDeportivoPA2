@@ -164,8 +164,8 @@
                     {
                         Id = model.Id,
                         MembershipType = await this.dataContext.MembershipTypes.FindAsync(model.MembershipTypeId),
-                        ImageUrl = (model.ImageFile != null ? await imageHelper.UpdateImageAsync(
-                        model.ImageFile, model.ImageUrl) : model.ImageUrl),
+                        ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                        model.ImageFile, "member","members") : model.ImageUrl),
                         User = await this.dataContext.Users.FindAsync(model.User.Id)
                     };
 
